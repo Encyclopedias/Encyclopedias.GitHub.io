@@ -5,11 +5,11 @@
   <meta charset="UTF-8" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<meta name="keywords" content="">
+<meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="Easy">
 <meta name="theme-color" content="#000">
-<title>Wizard</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1591271469443">
+<title>Whisper</title>
+<link rel="shortcut icon" href="/favicon.ico?v=1603882225360">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/pisces.css">
 
@@ -28,6 +28,16 @@
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?7bcc1aa5ddcf2f78e60a6f3385ff6e06";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
 
 </head>
 
@@ -49,7 +59,7 @@
         <div class="site-title">
           
             <a href="/" class="brand">
-              <span>Wizard</span>
+              <span>Whisper</span>
             </a>  
           
         </div>
@@ -68,7 +78,7 @@
               
               
                 <a href="/" target="_self">
-                  <i class="fa fa-home"></i> Home
+                  <i class="fa fa-home"></i> 主页
                 </a>
               
             </li>
@@ -108,19 +118,6 @@
               
                 <a href="/post/about/" target="_self">
                   <i class="fa fa-user"></i> 关于
-                </a>
-              
-            </li>
-          
-            
-            
-              
-            
-            <li class="nav-item ">
-              
-              
-                <a href="https://www.baidu.com/" target="_blank">
-                  <i class="fa fa-globe"></i> test
                 </a>
               
             </li>
@@ -174,14 +171,14 @@
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
-    <p class="site-author-name">无名</p>
+    <p class="site-author-name">一个有点肉的瘦子</p>
     
   </div>
   <div class="sidebar-item side-item-stat right-motion">
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">2</span>
+        <span class="site-item-stat-count">5</span>
         <span class="site-item-stat-name">文章</span>
       </a>
     </div>
@@ -203,7 +200,7 @@
       <div class="sidebar-item">
         <span class="site-item-rss">
             <i class="fa fa-rss"></i>
-            <a href="https://encyclopedias.github.io/atom.xml" target="_blank">RSS</a>
+            <a href="https://whisper.github.io/atom.xml" target="_blank">RSS</a>
         </span>
       </div>
     
@@ -264,7 +261,7 @@
 <style>
   .v .veditor {
     min-height: 10rem;
-    background-image: url('');
+    background-image: url('https://upimage.alexhchu.com/2020/04/21/47eda59424daa.gif');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: right;
@@ -313,10 +310,7 @@
     <div class="footer-box">
   <footer class="footer">
     <div class="copyright">
-      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | © 2019-2020 Theme By <a href="https://github.com/hsxyhao/gridea-theme-next" target="_blank">HsxyHao</a>
-    </div>
-    <div class="poweredby">
-      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+      
     </div>
   </footer>
   
@@ -331,48 +325,6 @@
   </div>
   
   
-  
-    
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
-  <div class="aplayer" id="aplayer"></div>
-  <script>
-  let musics = JSON.parse('[{"author":"陈奕迅","cover":"","lrc":"","musicLink":"http://music.163.com/song/media/outer/url?id=65528.mp3","musicName":"淘汰"}]');
-  let mediaMusic = [];
-  for (let i = 0; i < musics.length; i++) {
-    let item = musics[i];
-    mediaMusic.push({
-      name: item.musicName,
-      artist: item.author,
-      url: item.musicLink,
-      lrc: item.lrc,
-      cover: item.cover
-    });
-  }
-
-  const ap = new APlayer({
-      container: document.getElementById('aplayer'),
-      fixed: true,
-      lrcType: 3,
-      listFolded: false,
-      listMaxHeight: 90,
-      audio: mediaMusic
-  });
-  window.addEventListener('load', function() {
-    let postBody = document.querySelector('#post_body');
-    let hs = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
-    postBody && hs.forEach(h => {
-      let helems = postBody.querySelectorAll(h);
-      if (helems.length > 0) {
-        helems.forEach(elem => {
-          elem.id = encodeURI(elem.id);
-        })
-      }
-    })
-  })
-  </script>
-
-
   
 </div>
 <script>
@@ -612,6 +564,13 @@
 </script>
 <script src="/media/js/motion.js"></script>
 
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+<script>
+  var scroll = new SmoothScroll('a[href*="#"]', {
+    speed: 500
+  });
+</script>
+
 <!-- <div class="search-mask" id="search_mask">
   <div class="search-box">
     <div class="search-title">
@@ -624,13 +583,120 @@
     <div class="result">
       
       <div class="item">
-        <a class="result-title" href="https://encyclopedias.github.io/post/test/"" data-c="
-          &lt;h2 id=&#34;二级标题&#34;&gt;二级标题&lt;/h2&gt;
-">Test</a>
+        <a class="result-title" href="https://whisper.github.io/post/ruan-jian-tui-jian-zhi-ni-zhi-de-yong-you-xi-lie/"" data-c="
+          &lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Shadowrocket, 外号小火箭，是用于使用ssr链接后用于翻墙的工具。苹果Apple store售价0.99刀。下载该软件可以通过PP助手安装。&lt;a href=&#34;https://wwe.lanzous.com/ib7mkte&#34;&gt;点击下载&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Iris Pro是一个护眼的软件,这是一个付费的软件，好像也就几块钱然后终生使用。想白嫖的 &lt;a href=&#34;https://wwe.lanzous.com/ib7lrab&#34;&gt;点击下载&lt;/a&gt;，官网&lt;a href=&#34;https://iristech.co/&#34;&gt;下载地址&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Kitsunebi是一款支持V2ray协议的翻墙工具。苹果Apple Store售价4.99刀。下载该软件可以通过PP助手安装。[点击下载] (https://wwe.lanzous.com/ijrHuhtjv5g）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+">软件推荐之你值得拥有系列(不定时更新)</a>
       </div>
       
       <div class="item">
-        <a class="result-title" href="https://encyclopedias.github.io/post/about/"" data-c="
+        <a class="result-title" href="https://whisper.github.io/post/mockito-wan-cheng-dan-yuan-ce-shi-unit-test/"" data-c="
+          &lt;h2 id=&#34;1引入maven依赖&#34;&gt;&lt;strong&gt;1.引入maven依赖&lt;/strong&gt;&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.mockito&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;mockito-core&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;2.23.4&amp;lt;/version&amp;gt;
+    &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;Note: 此处的scope最好选择test。 因为test的scope是不可以继承的，即使其他模块引用了你所在的模块，没有什么影响。由于该依赖和powermock(Mock静态方法依赖)存在版本不兼容问题，如果其他模块依赖了该模块并继承了你的Mockito，UT运行会报错。&lt;/code&gt;&lt;br&gt;
+&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id=&#34;2mock-普通方法&#34;&gt;&lt;strong&gt;2.Mock 普通方法&lt;/strong&gt;&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt; @InjectMocks
+ private ABCService abcService = new ABCServiceImpl();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;校验boolean类型数据&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;ABC abc = new ABC();
+abc.setId(&amp;quot;id&amp;quot;);
+when(abcMapper.create(abc)).thenReturn(1);
+Assert.assertTrue(abcService.create(abc));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;校验返回数据&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;ABC exceptedABC = new ABC();
+ABC abc = new ABC();
+when(abcMapper.selectABCById(abc)).thenReturn(abc);
+ABC result = abcService.selectABCById(abc);
+Assert.assertEquals(exceptedABC, result);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;校验抛出异常方法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;Assertions.assertThatThrownBy(() -&amp;gt; abcService.getABCDetail(&amp;quot;Id&amp;quot;).isInstanceOf(abcException.class);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;4.校验方法执行次数&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Mockito.verify(abcService, Mockito.never()).abcGetUser(any(), anyList(), any()); //没有执行到
+Mockito.verify(abcService).abcGetUser(any(), anyList(), any()); //默认执行一次
+Mockito.verify(abcService, Mockito.times(n)).abcGetUser(any(), anyList(), any()); //执行n次
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;3mock-同一个类中方法之间调用&#34;&gt;&lt;strong&gt;3.Mock 同一个类中方法之间调用&lt;/strong&gt;&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;@InjectMocks
+@Spy
+private ABCService abcService = new ABCServiceImpl();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;ABC abc = new ABC();
+doReturn(abc).when(abcService).getCount(anyString()); //
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;4mock-静态方法&#34;&gt;&lt;strong&gt;4.Mock 静态方法&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Mock静态方法需要引入如下依赖&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    &amp;lt;dependency&amp;gt;
+      &amp;lt;groupId&amp;gt;org.powermock&amp;lt;/groupId&amp;gt;
+      &amp;lt;artifactId&amp;gt;powermock-api-mockito2&amp;lt;/artifactId&amp;gt;
+      &amp;lt;version&amp;gt;2.0.2&amp;lt;/version&amp;gt;
+      &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt;
+    &amp;lt;/dependency&amp;gt;
+    &amp;lt;dependency&amp;gt;
+      &amp;lt;groupId&amp;gt;org.powermock&amp;lt;/groupId&amp;gt;
+      &amp;lt;artifactId&amp;gt;powermock-module-junit4&amp;lt;/artifactId&amp;gt;
+      &amp;lt;version&amp;gt;2.0.2&amp;lt;/version&amp;gt;
+      &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt;
+    &amp;lt;/dependency&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这个依赖和上面的Mock依赖会有版本冲突的，慎用。&lt;br&gt;
+我现在一般就是让代码走到静态方法里面去。&lt;/p&gt;
+">Mockito完成单元测试(Unit Test)</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" href="https://whisper.github.io/post/hang-zhou-ying-jie-bi-ye-sheng-sheng-huo-bu-tie-shen-qing/"" data-c="
+          &lt;p&gt;吧&lt;/p&gt;
+">杭州</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" href="https://whisper.github.io/post/jian-dan-cu-bao-ji-huo-jrebelrang-gong-zuo-shi-bei-gong-ban/"" data-c="
+          &lt;h2 id=&#34;下载安装&#34;&gt;&lt;strong&gt;下载安装&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;在idea中点击file-&amp;gt;settings，再点击plugins, 在搜索框中输入JRebel, 选择第一个插件并点击“install”按钮，安装完成后点击确定并重启idea。&lt;/p&gt;
+&lt;h2 id=&#34;离线激活&#34;&gt;&lt;strong&gt;离线激活&lt;/strong&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;此处需要下载一个软件, &lt;a href=&#34;https://wwe.lanzous.com/iaWNwhnw7xc&#34;&gt;点击此处&lt;/a&gt;下载 下载结束后打开软件准备激活JRebel;&lt;/li&gt;
+&lt;li&gt;File-&amp;gt;Setting-&amp;gt;JRebel, 点击&amp;quot;Change license&amp;quot;按钮，选择“Team URL&amp;quot;;&lt;/li&gt;
+&lt;li&gt;输入以下任意一行链接：
+&lt;ul&gt;
+&lt;li&gt;http://127.0.0.1:8888/88414687-3b91-4286-89ba-2dc813b107ce&lt;/li&gt;
+&lt;li&gt;http://127.0.0.1:8888/ff47a3ac-c11e-4cb2-836b-9b2b26101696&lt;/li&gt;
+&lt;li&gt;http://127.0.0.1:8888/11d221d1-5cf0-4557-b023-4b4adfeeb36a&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;点击“Active”按钮，完成激活， 若提示激活失败多试试几次，不行的话把之前打开的软件重启一下；&lt;/li&gt;
+&lt;/ol&gt;
+">简单粗暴激活JRebel，让工作事倍功半</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" href="https://whisper.github.io/post/about/"" data-c="
           &lt;blockquote&gt;
 &lt;p&gt;欢迎来到我的小站呀，很高兴遇见你！🤝&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -642,36 +708,16 @@
       </div>
       
       <div class="item">
-        <a class="result-title" href="https://encyclopedias.github.io/post/hello-gridea/"" data-c="
-          &lt;p&gt;👏  欢迎使用 &lt;strong&gt;Gridea&lt;/strong&gt; ！&lt;br&gt;
-✍️  &lt;strong&gt;Gridea&lt;/strong&gt; 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...&lt;/p&gt;
-&lt;!-- more --&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/getgridea/gridea&#34;&gt;Github&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://gridea.dev/&#34;&gt;Gridea 主页&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://fehey.com/&#34;&gt;示例网站&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;特性&#34;&gt;特性👇&lt;/h2&gt;
-&lt;p&gt;📝  你可以使用最酷的 &lt;strong&gt;Markdown&lt;/strong&gt; 语法，进行快速创作&lt;/p&gt;
-&lt;p&gt;🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片&lt;/p&gt;
-&lt;p&gt;🏷️  你可以对文章进行标签分组&lt;/p&gt;
-&lt;p&gt;📋  你可以自定义菜单，甚至可以创建外部链接菜单&lt;/p&gt;
-&lt;p&gt;💻  你可以在 &lt;strong&gt;Windows&lt;/strong&gt;，&lt;strong&gt;MacOS&lt;/strong&gt; 或 &lt;strong&gt;Linux&lt;/strong&gt; 设备上使用此客户端&lt;/p&gt;
-&lt;p&gt;🌎  你可以使用 &lt;strong&gt;𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌&lt;/strong&gt; 或 &lt;strong&gt;Coding Pages&lt;/strong&gt; 向世界展示，未来将支持更多平台&lt;/p&gt;
-&lt;p&gt;💬  你可以进行简单的配置，接入 &lt;a href=&#34;https://github.com/gitalk/gitalk&#34;&gt;Gitalk&lt;/a&gt; 或 &lt;a href=&#34;https://github.com/SukkaW/DisqusJS&#34;&gt;DisqusJS&lt;/a&gt; 评论系统&lt;/p&gt;
-&lt;p&gt;🇬🇧  你可以使用&lt;strong&gt;中文简体&lt;/strong&gt;或&lt;strong&gt;英语&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力&lt;/p&gt;
-&lt;p&gt;🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步&lt;/p&gt;
-&lt;p&gt;🌱 当然 &lt;strong&gt;Gridea&lt;/strong&gt; 还很年轻，有很多不足，但请相信，它会不停向前 🏃&lt;/p&gt;
-&lt;p&gt;未来，它一定会成为你离不开的伙伴&lt;/p&gt;
-&lt;p&gt;尽情发挥你的才华吧！&lt;/p&gt;
-&lt;p&gt;😘 Enjoy~&lt;/p&gt;
-">Hello Gridea</a>
+        <a class="result-title" href="https://whisper.github.io/post/hello-gridea/"" data-c="
+          &lt;p&gt;慢慢更新 一个月一到两篇吧~~&lt;/p&gt;
+">第一篇文章 先占个坑</a>
       </div>
       
     </div>
   </div>
 </div>
 <script>
-  // var escape = "[{&#34;content&#34;:&#34;&lt;h2 id=\&#34;二级标题\&#34;&gt;二级标题&lt;/h2&gt;\n&#34;,&#34;fileName&#34;:&#34;test&#34;,&#34;abstract&#34;:&#34;&#34;,&#34;title&#34;:&#34;Test&#34;,&#34;tags&#34;:[{&#34;index&#34;:1,&#34;name&#34;:&#34;software&#34;,&#34;slug&#34;:&#34;pFv3v5VmC&#34;,&#34;used&#34;:true,&#34;link&#34;:&#34;https://encyclopedias.github.io/tag/pFv3v5VmC/&#34;}],&#34;date&#34;:&#34;2020-06-03 16:36:53&#34;,&#34;dateFormat&#34;:&#34;2020-06-03&#34;,&#34;feature&#34;:&#34;&#34;,&#34;link&#34;:&#34;https://encyclopedias.github.io/post/test/&#34;,&#34;hideInList&#34;:false,&#34;isTop&#34;:false,&#34;stats&#34;:{&#34;text&#34;:&#34;1 min read&#34;,&#34;time&#34;:0,&#34;words&#34;:4,&#34;minutes&#34;:1},&#34;description&#34;:&#34;二级标题\n&#34;,&#34;toc&#34;:&#34;&lt;ul class=\&#34;markdownIt-TOC\&#34;&gt;\n&lt;li&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E4%BA%8C%E7%BA%A7%E6%A0%87%E9%A2%98\&#34;&gt;二级标题&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;/ul&gt;\n&#34;},{&#34;content&#34;:&#34;&lt;blockquote&gt;\n&lt;p&gt;欢迎来到我的小站呀，很高兴遇见你！🤝&lt;/p&gt;\n&lt;/blockquote&gt;\n&lt;h2 id=\&#34;关于本站\&#34;&gt;🏠 关于本站&lt;/h2&gt;\n&lt;h2 id=\&#34;博主是谁\&#34;&gt;👨‍💻 博主是谁&lt;/h2&gt;\n&lt;h2 id=\&#34;兴趣爱好\&#34;&gt;⛹ 兴趣爱好&lt;/h2&gt;\n&lt;h2 id=\&#34;联系我呀\&#34;&gt;📬 联系我呀&lt;/h2&gt;\n&#34;,&#34;fileName&#34;:&#34;about&#34;,&#34;abstract&#34;:&#34;&#34;,&#34;title&#34;:&#34;关于&#34;,&#34;tags&#34;:[],&#34;date&#34;:&#34;2019-01-25 19:09:48&#34;,&#34;dateFormat&#34;:&#34;2019-01-25&#34;,&#34;feature&#34;:&#34;&#34;,&#34;link&#34;:&#34;https://encyclopedias.github.io/post/about/&#34;,&#34;hideInList&#34;:true,&#34;isTop&#34;:false,&#34;stats&#34;:{&#34;text&#34;:&#34;1 min read&#34;,&#34;time&#34;:6000,&#34;words&#34;:31,&#34;minutes&#34;:1},&#34;description&#34;:&#34;\n欢迎来到我的小站呀，很高兴遇见你！🤝\n\n🏠 关于本站\n👨‍💻 博主是谁\n⛹ 兴趣爱好\n📬 联系我呀\n...&#34;,&#34;toc&#34;:&#34;&lt;ul class=\&#34;markdownIt-TOC\&#34;&gt;\n&lt;li&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99\&#34;&gt;🏠 关于本站&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81\&#34;&gt;👨‍💻 博主是谁&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD\&#34;&gt;⛹ 兴趣爱好&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80\&#34;&gt;📬 联系我呀&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;/ul&gt;\n&#34;},{&#34;content&#34;:&#34;&lt;p&gt;👏  欢迎使用 &lt;strong&gt;Gridea&lt;/strong&gt; ！&lt;br&gt;\n✍️  &lt;strong&gt;Gridea&lt;/strong&gt; 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...&lt;/p&gt;\n&lt;!-- more --&gt;\n&lt;p&gt;&lt;a href=\&#34;https://github.com/getgridea/gridea\&#34;&gt;Github&lt;/a&gt;&lt;br&gt;\n&lt;a href=\&#34;https://gridea.dev/\&#34;&gt;Gridea 主页&lt;/a&gt;&lt;br&gt;\n&lt;a href=\&#34;http://fehey.com/\&#34;&gt;示例网站&lt;/a&gt;&lt;/p&gt;\n&lt;h2 id=\&#34;特性\&#34;&gt;特性👇&lt;/h2&gt;\n&lt;p&gt;📝  你可以使用最酷的 &lt;strong&gt;Markdown&lt;/strong&gt; 语法，进行快速创作&lt;/p&gt;\n&lt;p&gt;🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片&lt;/p&gt;\n&lt;p&gt;🏷️  你可以对文章进行标签分组&lt;/p&gt;\n&lt;p&gt;📋  你可以自定义菜单，甚至可以创建外部链接菜单&lt;/p&gt;\n&lt;p&gt;💻  你可以在 &lt;strong&gt;Windows&lt;/strong&gt;，&lt;strong&gt;MacOS&lt;/strong&gt; 或 &lt;strong&gt;Linux&lt;/strong&gt; 设备上使用此客户端&lt;/p&gt;\n&lt;p&gt;🌎  你可以使用 &lt;strong&gt;𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌&lt;/strong&gt; 或 &lt;strong&gt;Coding Pages&lt;/strong&gt; 向世界展示，未来将支持更多平台&lt;/p&gt;\n&lt;p&gt;💬  你可以进行简单的配置，接入 &lt;a href=\&#34;https://github.com/gitalk/gitalk\&#34;&gt;Gitalk&lt;/a&gt; 或 &lt;a href=\&#34;https://github.com/SukkaW/DisqusJS\&#34;&gt;DisqusJS&lt;/a&gt; 评论系统&lt;/p&gt;\n&lt;p&gt;🇬🇧  你可以使用&lt;strong&gt;中文简体&lt;/strong&gt;或&lt;strong&gt;英语&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力&lt;/p&gt;\n&lt;p&gt;🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步&lt;/p&gt;\n&lt;p&gt;🌱 当然 &lt;strong&gt;Gridea&lt;/strong&gt; 还很年轻，有很多不足，但请相信，它会不停向前 🏃&lt;/p&gt;\n&lt;p&gt;未来，它一定会成为你离不开的伙伴&lt;/p&gt;\n&lt;p&gt;尽情发挥你的才华吧！&lt;/p&gt;\n&lt;p&gt;😘 Enjoy~&lt;/p&gt;\n&#34;,&#34;fileName&#34;:&#34;hello-gridea&#34;,&#34;abstract&#34;:&#34;&lt;p&gt;👏  欢迎使用 &lt;strong&gt;Gridea&lt;/strong&gt; ！&lt;br&gt;\n✍️  &lt;strong&gt;Gridea&lt;/strong&gt; 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...&lt;/p&gt;\n&#34;,&#34;title&#34;:&#34;Hello Gridea&#34;,&#34;tags&#34;:[{&#34;name&#34;:&#34;Gridea&#34;,&#34;slug&#34;:&#34;G9fZzd7V4&#34;,&#34;used&#34;:true,&#34;link&#34;:&#34;https://encyclopedias.github.io/tag/G9fZzd7V4/&#34;}],&#34;date&#34;:&#34;2018-12-12 00:00:00&#34;,&#34;dateFormat&#34;:&#34;2018-12-12&#34;,&#34;feature&#34;:&#34;https://encyclopedias.github.io/post-images/hello-gridea.png&#34;,&#34;link&#34;:&#34;https://encyclopedias.github.io/post/hello-gridea/&#34;,&#34;hideInList&#34;:false,&#34;isTop&#34;:false,&#34;stats&#34;:{&#34;text&#34;:&#34;2 min read&#34;,&#34;time&#34;:62000,&#34;words&#34;:298,&#34;minutes&#34;:2},&#34;description&#34;:&#34;👏  欢迎使用 Gridea ！\n✍️  Gridea 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...\n\nGithub\nGridea 主页\n示例网站\n特性👇\n📝  你可以使用最酷的 Markdo...&#34;,&#34;toc&#34;:&#34;&lt;ul class=\&#34;markdownIt-TOC\&#34;&gt;\n&lt;li&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E7%89%B9%E6%80%A7\&#34;&gt;特性👇&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;/ul&gt;\n&#34;}]";
+  // var escape = "[{&#34;content&#34;:&#34;&lt;ol&gt;\n&lt;li&gt;\n&lt;p&gt;Shadowrocket, 外号小火箭，是用于使用ssr链接后用于翻墙的工具。苹果Apple store售价0.99刀。下载该软件可以通过PP助手安装。&lt;a href=\&#34;https://wwe.lanzous.com/ib7mkte\&#34;&gt;点击下载&lt;/a&gt;&lt;/p&gt;\n&lt;/li&gt;\n&lt;li&gt;\n&lt;p&gt;Iris Pro是一个护眼的软件,这是一个付费的软件，好像也就几块钱然后终生使用。想白嫖的 &lt;a href=\&#34;https://wwe.lanzous.com/ib7lrab\&#34;&gt;点击下载&lt;/a&gt;，官网&lt;a href=\&#34;https://iristech.co/\&#34;&gt;下载地址&lt;/a&gt;&lt;/p&gt;\n&lt;/li&gt;\n&lt;li&gt;\n&lt;p&gt;Kitsunebi是一款支持V2ray协议的翻墙工具。苹果Apple Store售价4.99刀。下载该软件可以通过PP助手安装。[点击下载] (https://wwe.lanzous.com/ijrHuhtjv5g）&lt;/p&gt;\n&lt;/li&gt;\n&lt;/ol&gt;\n&#34;,&#34;fileName&#34;:&#34;ruan-jian-tui-jian-zhi-ni-zhi-de-yong-you-xi-lie&#34;,&#34;abstract&#34;:&#34;&#34;,&#34;title&#34;:&#34;软件推荐之你值得拥有系列(不定时更新)&#34;,&#34;tags&#34;:[],&#34;date&#34;:&#34;2020-10-23 15:55:38&#34;,&#34;dateFormat&#34;:&#34;2020-10-23&#34;,&#34;feature&#34;:&#34;&#34;,&#34;link&#34;:&#34;https://whisper.github.io/post/ruan-jian-tui-jian-zhi-ni-zhi-de-yong-you-xi-lie/&#34;,&#34;hideInList&#34;:false,&#34;isTop&#34;:false,&#34;stats&#34;:{&#34;text&#34;:&#34;1 min read&#34;,&#34;time&#34;:30000,&#34;words&#34;:138,&#34;minutes&#34;:1},&#34;description&#34;:&#34;\n\nShadowrocket, 外号小火箭，是用于使用ssr链接后用于翻墙的工具。苹果Apple store售价0.99刀。下载该软件可以通过PP助手安装。点击下载\n\n\nIris Pro是一个护眼的软件,这是一个付费的软件，好像也就几块钱然...&#34;,&#34;toc&#34;:&#34;&#34;},{&#34;content&#34;:&#34;&lt;h2 id=\&#34;1引入maven依赖\&#34;&gt;&lt;strong&gt;1.引入maven依赖&lt;/strong&gt;&lt;/h2&gt;\n&lt;pre&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;\n    &amp;lt;groupId&amp;gt;org.mockito&amp;lt;/groupId&amp;gt;\n    &amp;lt;artifactId&amp;gt;mockito-core&amp;lt;/artifactId&amp;gt;\n    &amp;lt;version&amp;gt;2.23.4&amp;lt;/version&amp;gt;\n    &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt;\n&amp;lt;/dependency&amp;gt;\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;&lt;code&gt;Note: 此处的scope最好选择test。 因为test的scope是不可以继承的，即使其他模块引用了你所在的模块，没有什么影响。由于该依赖和powermock(Mock静态方法依赖)存在版本不兼容问题，如果其他模块依赖了该模块并继承了你的Mockito，UT运行会报错。&lt;/code&gt;&lt;br&gt;\n&lt;br/&gt;&lt;/p&gt;\n&lt;h2 id=\&#34;2mock-普通方法\&#34;&gt;&lt;strong&gt;2.Mock 普通方法&lt;/strong&gt;&lt;/h2&gt;\n&lt;pre&gt;&lt;code&gt; @InjectMocks\n private ABCService abcService = new ABCServiceImpl();\n&lt;/code&gt;&lt;/pre&gt;\n&lt;ol&gt;\n&lt;li&gt;校验boolean类型数据&lt;/li&gt;\n&lt;/ol&gt;\n&lt;pre&gt;&lt;code&gt;ABC abc = new ABC();\nabc.setId(&amp;quot;id&amp;quot;);\nwhen(abcMapper.create(abc)).thenReturn(1);\nAssert.assertTrue(abcService.create(abc));\n&lt;/code&gt;&lt;/pre&gt;\n&lt;ol start=\&#34;2\&#34;&gt;\n&lt;li&gt;校验返回数据&lt;/li&gt;\n&lt;/ol&gt;\n&lt;pre&gt;&lt;code&gt;ABC exceptedABC = new ABC();\nABC abc = new ABC();\nwhen(abcMapper.selectABCById(abc)).thenReturn(abc);\nABC result = abcService.selectABCById(abc);\nAssert.assertEquals(exceptedABC, result);\n&lt;/code&gt;&lt;/pre&gt;\n&lt;ol start=\&#34;3\&#34;&gt;\n&lt;li&gt;校验抛出异常方法&lt;/li&gt;\n&lt;/ol&gt;\n&lt;pre&gt;&lt;code&gt;Assertions.assertThatThrownBy(() -&amp;gt; abcService.getABCDetail(&amp;quot;Id&amp;quot;).isInstanceOf(abcException.class);\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;4.校验方法执行次数&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;Mockito.verify(abcService, Mockito.never()).abcGetUser(any(), anyList(), any()); //没有执行到\nMockito.verify(abcService).abcGetUser(any(), anyList(), any()); //默认执行一次\nMockito.verify(abcService, Mockito.times(n)).abcGetUser(any(), anyList(), any()); //执行n次\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h2 id=\&#34;3mock-同一个类中方法之间调用\&#34;&gt;&lt;strong&gt;3.Mock 同一个类中方法之间调用&lt;/strong&gt;&lt;/h2&gt;\n&lt;pre&gt;&lt;code&gt;@InjectMocks\n@Spy\nprivate ABCService abcService = new ABCServiceImpl();\n&lt;/code&gt;&lt;/pre&gt;\n&lt;pre&gt;&lt;code&gt;ABC abc = new ABC();\ndoReturn(abc).when(abcService).getCount(anyString()); //\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h2 id=\&#34;4mock-静态方法\&#34;&gt;&lt;strong&gt;4.Mock 静态方法&lt;/strong&gt;&lt;/h2&gt;\n&lt;p&gt;Mock静态方法需要引入如下依赖&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;    &amp;lt;dependency&amp;gt;\n      &amp;lt;groupId&amp;gt;org.powermock&amp;lt;/groupId&amp;gt;\n      &amp;lt;artifactId&amp;gt;powermock-api-mockito2&amp;lt;/artifactId&amp;gt;\n      &amp;lt;version&amp;gt;2.0.2&amp;lt;/version&amp;gt;\n      &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt;\n    &amp;lt;/dependency&amp;gt;\n    &amp;lt;dependency&amp;gt;\n      &amp;lt;groupId&amp;gt;org.powermock&amp;lt;/groupId&amp;gt;\n      &amp;lt;artifactId&amp;gt;powermock-module-junit4&amp;lt;/artifactId&amp;gt;\n      &amp;lt;version&amp;gt;2.0.2&amp;lt;/version&amp;gt;\n      &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt;\n    &amp;lt;/dependency&amp;gt;\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;这个依赖和上面的Mock依赖会有版本冲突的，慎用。&lt;br&gt;\n我现在一般就是让代码走到静态方法里面去。&lt;/p&gt;\n&#34;,&#34;fileName&#34;:&#34;mockito-wan-cheng-dan-yuan-ce-shi-unit-test&#34;,&#34;abstract&#34;:&#34;&#34;,&#34;title&#34;:&#34;Mockito完成单元测试(Unit Test)&#34;,&#34;tags&#34;:[],&#34;date&#34;:&#34;2020-10-23 14:10:26&#34;,&#34;dateFormat&#34;:&#34;2020-10-23&#34;,&#34;feature&#34;:&#34;&#34;,&#34;link&#34;:&#34;https://whisper.github.io/post/mockito-wan-cheng-dan-yuan-ce-shi-unit-test/&#34;,&#34;hideInList&#34;:false,&#34;isTop&#34;:false,&#34;stats&#34;:{&#34;text&#34;:&#34;3 min read&#34;,&#34;time&#34;:129000,&#34;words&#34;:436,&#34;minutes&#34;:3},&#34;description&#34;:&#34;1.引入maven依赖\n&amp;lt;dependency&amp;gt;\n    &amp;lt;groupId&amp;gt;org.mockito&amp;lt;/groupId&amp;gt;\n    &amp;lt;artifactId&amp;gt;mockito-core&amp;lt;/art...&#34;,&#34;toc&#34;:&#34;&lt;ul class=\&#34;markdownIt-TOC\&#34;&gt;\n&lt;li&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#1%E5%BC%95%E5%85%A5maven%E4%BE%9D%E8%B5%96\&#34;&gt;&lt;strong&gt;1.引入maven依赖&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#2mock-%E6%99%AE%E9%80%9A%E6%96%B9%E6%B3%95\&#34;&gt;&lt;strong&gt;2.Mock 普通方法&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#3mock-%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E6%96%B9%E6%B3%95%E4%B9%8B%E9%97%B4%E8%B0%83%E7%94%A8\&#34;&gt;&lt;strong&gt;3.Mock 同一个类中方法之间调用&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#4mock-%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95\&#34;&gt;&lt;strong&gt;4.Mock 静态方法&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;/ul&gt;\n&#34;},{&#34;content&#34;:&#34;&lt;p&gt;吧&lt;/p&gt;\n&#34;,&#34;fileName&#34;:&#34;hang-zhou-ying-jie-bi-ye-sheng-sheng-huo-bu-tie-shen-qing&#34;,&#34;abstract&#34;:&#34;&#34;,&#34;title&#34;:&#34;杭州&#34;,&#34;tags&#34;:[],&#34;date&#34;:&#34;2020-06-08 18:34:08&#34;,&#34;dateFormat&#34;:&#34;2020-06-08&#34;,&#34;feature&#34;:&#34;&#34;,&#34;link&#34;:&#34;https://whisper.github.io/post/hang-zhou-ying-jie-bi-ye-sheng-sheng-huo-bu-tie-shen-qing/&#34;,&#34;hideInList&#34;:false,&#34;isTop&#34;:false,&#34;stats&#34;:{&#34;text&#34;:&#34;1 min read&#34;,&#34;time&#34;:0,&#34;words&#34;:1,&#34;minutes&#34;:1},&#34;description&#34;:&#34;吧\n&#34;,&#34;toc&#34;:&#34;&#34;},{&#34;content&#34;:&#34;&lt;h2 id=\&#34;下载安装\&#34;&gt;&lt;strong&gt;下载安装&lt;/strong&gt;&lt;/h2&gt;\n&lt;p&gt;在idea中点击file-&amp;gt;settings，再点击plugins, 在搜索框中输入JRebel, 选择第一个插件并点击“install”按钮，安装完成后点击确定并重启idea。&lt;/p&gt;\n&lt;h2 id=\&#34;离线激活\&#34;&gt;&lt;strong&gt;离线激活&lt;/strong&gt;&lt;/h2&gt;\n&lt;ol&gt;\n&lt;li&gt;此处需要下载一个软件, &lt;a href=\&#34;https://wwe.lanzous.com/iaWNwhnw7xc\&#34;&gt;点击此处&lt;/a&gt;下载 下载结束后打开软件准备激活JRebel;&lt;/li&gt;\n&lt;li&gt;File-&amp;gt;Setting-&amp;gt;JRebel, 点击&amp;quot;Change license&amp;quot;按钮，选择“Team URL&amp;quot;;&lt;/li&gt;\n&lt;li&gt;输入以下任意一行链接：\n&lt;ul&gt;\n&lt;li&gt;http://127.0.0.1:8888/88414687-3b91-4286-89ba-2dc813b107ce&lt;/li&gt;\n&lt;li&gt;http://127.0.0.1:8888/ff47a3ac-c11e-4cb2-836b-9b2b26101696&lt;/li&gt;\n&lt;li&gt;http://127.0.0.1:8888/11d221d1-5cf0-4557-b023-4b4adfeeb36a&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;li&gt;点击“Active”按钮，完成激活， 若提示激活失败多试试几次，不行的话把之前打开的软件重启一下；&lt;/li&gt;\n&lt;/ol&gt;\n&#34;,&#34;fileName&#34;:&#34;jian-dan-cu-bao-ji-huo-jrebelrang-gong-zuo-shi-bei-gong-ban&#34;,&#34;abstract&#34;:&#34;&#34;,&#34;title&#34;:&#34;简单粗暴激活JRebel，让工作事倍功半&#34;,&#34;tags&#34;:[{&#34;index&#34;:-1,&#34;name&#34;:&#34;Tool&#34;,&#34;slug&#34;:&#34;nbJhdRZfw&#34;,&#34;used&#34;:true,&#34;link&#34;:&#34;https://whisper.github.io/tag/nbJhdRZfw/&#34;}],&#34;date&#34;:&#34;2020-06-02 16:36:53&#34;,&#34;dateFormat&#34;:&#34;2020-06-02&#34;,&#34;feature&#34;:&#34;&#34;,&#34;link&#34;:&#34;https://whisper.github.io/post/jian-dan-cu-bao-ji-huo-jrebelrang-gong-zuo-shi-bei-gong-ban/&#34;,&#34;hideInList&#34;:false,&#34;isTop&#34;:false,&#34;stats&#34;:{&#34;text&#34;:&#34;1 min read&#34;,&#34;time&#34;:45000,&#34;words&#34;:181,&#34;minutes&#34;:1},&#34;description&#34;:&#34;下载安装\n在idea中点击file-&amp;gt;settings，再点击plugins, 在搜索框中输入JRebel, 选择第一个插件并点击“install”按钮，安装完成后点击确定并重启idea。\n离线激活\n\n此处需要下载一个软件, 点击此处...&#34;,&#34;toc&#34;:&#34;&lt;ul class=\&#34;markdownIt-TOC\&#34;&gt;\n&lt;li&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85\&#34;&gt;&lt;strong&gt;下载安装&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E7%A6%BB%E7%BA%BF%E6%BF%80%E6%B4%BB\&#34;&gt;&lt;strong&gt;离线激活&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;/ul&gt;\n&#34;},{&#34;content&#34;:&#34;&lt;blockquote&gt;\n&lt;p&gt;欢迎来到我的小站呀，很高兴遇见你！🤝&lt;/p&gt;\n&lt;/blockquote&gt;\n&lt;h2 id=\&#34;关于本站\&#34;&gt;🏠 关于本站&lt;/h2&gt;\n&lt;h2 id=\&#34;博主是谁\&#34;&gt;👨‍💻 博主是谁&lt;/h2&gt;\n&lt;h2 id=\&#34;兴趣爱好\&#34;&gt;⛹ 兴趣爱好&lt;/h2&gt;\n&lt;h2 id=\&#34;联系我呀\&#34;&gt;📬 联系我呀&lt;/h2&gt;\n&#34;,&#34;fileName&#34;:&#34;about&#34;,&#34;abstract&#34;:&#34;&#34;,&#34;title&#34;:&#34;关于&#34;,&#34;tags&#34;:[],&#34;date&#34;:&#34;2019-01-25 19:09:48&#34;,&#34;dateFormat&#34;:&#34;2019-01-25&#34;,&#34;feature&#34;:&#34;&#34;,&#34;link&#34;:&#34;https://whisper.github.io/post/about/&#34;,&#34;hideInList&#34;:true,&#34;isTop&#34;:false,&#34;stats&#34;:{&#34;text&#34;:&#34;1 min read&#34;,&#34;time&#34;:6000,&#34;words&#34;:31,&#34;minutes&#34;:1},&#34;description&#34;:&#34;\n欢迎来到我的小站呀，很高兴遇见你！🤝\n\n🏠 关于本站\n👨‍💻 博主是谁\n⛹ 兴趣爱好\n📬 联系我呀\n...&#34;,&#34;toc&#34;:&#34;&lt;ul class=\&#34;markdownIt-TOC\&#34;&gt;\n&lt;li&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99\&#34;&gt;🏠 关于本站&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81\&#34;&gt;👨‍💻 博主是谁&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD\&#34;&gt;⛹ 兴趣爱好&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80\&#34;&gt;📬 联系我呀&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;/ul&gt;\n&#34;},{&#34;content&#34;:&#34;&lt;p&gt;慢慢更新 一个月一到两篇吧~~&lt;/p&gt;\n&#34;,&#34;fileName&#34;:&#34;hello-gridea&#34;,&#34;abstract&#34;:&#34;&#34;,&#34;title&#34;:&#34;第一篇文章 先占个坑&#34;,&#34;tags&#34;:[{&#34;name&#34;:&#34;Gridea&#34;,&#34;slug&#34;:&#34;G9fZzd7V4&#34;,&#34;used&#34;:true,&#34;link&#34;:&#34;https://whisper.github.io/tag/G9fZzd7V4/&#34;}],&#34;date&#34;:&#34;2018-12-12 00:00:00&#34;,&#34;dateFormat&#34;:&#34;2018-12-12&#34;,&#34;feature&#34;:&#34;&#34;,&#34;link&#34;:&#34;https://whisper.github.io/post/hello-gridea/&#34;,&#34;hideInList&#34;:false,&#34;isTop&#34;:false,&#34;stats&#34;:{&#34;text&#34;:&#34;1 min read&#34;,&#34;time&#34;:2000,&#34;words&#34;:12,&#34;minutes&#34;:1},&#34;description&#34;:&#34;慢慢更新 一个月一到两篇吧~~\n&#34;,&#34;toc&#34;:&#34;&#34;}]";
   // var json = escape.substr(1, escape.length - 2);
   // var datas = json.split(',');
   // for (let i=0; i < datas.length; i++) {

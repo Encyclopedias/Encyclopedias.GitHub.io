@@ -2068,18 +2068,20 @@ pre > span.copy-code:hover {
 .hljs-strong {
   font-weight: bold;
 }
-body {
+.bg-color .bg-color {
+      background: transparent !important;
+    }body {
       background-color: #eee;
     }
     .nav-toggle .line {
       background-color: #eee !important;
     }.header {
-        width: 960px;
+        width: 1150px;
         margin: 0 auto;
       }
 
       .main-continer {
-        width: 960px;
+        width: 1150px;
         margin: 0 auto;
       }
     body {
@@ -2092,7 +2094,7 @@ body {
       border-bottom-color: #555;
     }
     .archive-timeline-box::after, .tag-timeline-wrapper::after {
-      background: #eeeeeefe;
+      background: #eeeeee99;
     }h1, h2, h3, h4, h5, h6 {
       color: #555;
     }
@@ -2136,11 +2138,11 @@ body {
       }.nav-item a:hover {
         color: #222;
       }.nav-item-active {
-      background: #f9f9f9fe;
+      background: #f9f9f999;
     }
 
     .nav-item:hover {
-      background: #f9f9f9fe;
+      background: #f9f9f999;
       color: rgba(0, 0, 0, 0.98);
     }.site-author-image {
       border-radius: 50%;
@@ -2152,11 +2154,11 @@ body {
       transition-duration: 59s;
       transition-timing-function: cubic-bezier(.34,0,.84,1);
     }.markdownIt-TOC a {
-      color: #eee;
-      border-bottom-color: #eee;
+      color: #868e96;
+      border-bottom-color: #868e96;
     }.markdownIt-TOC a:hover {
-      color: #fff;
-      border-bottom-color: #fff;
+      color: #212529;
+      border-bottom-color: #212529;
     }.active-current > a {
       color: #fc6423 !important;
       border-bottom-color: #fc6423 !important;
@@ -2176,7 +2178,7 @@ body {
       color: #fc6423;
       border-bottom-color: #fc6423;
     }.bg-color {
-      background-color: #fffffffe;
+      background-color: #ffffff99;
     }
       .site-meta {
         background: #000 !important;
@@ -2185,13 +2187,13 @@ body {
         background: #000 !important;
       }
     .brand {
-      background: #000000fe;
+      background: #00000099;
     }
     .main-title, .brand {
       color: #FFF !important;
     }
     .mist .site-title i {
-      background: #FFFFFFfe;
+      background: #FFFFFF99;
     }.box-shadow-wrapper {
       box-shadow: none !important;
     }body {
