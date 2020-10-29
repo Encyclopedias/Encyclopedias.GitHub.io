@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://whisper.github.io</id>
     <title>Whisper</title>
-    <updated>2020-10-29T05:06:50.971Z</updated>
+    <updated>2020-10-29T05:44:19.743Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://whisper.github.io"/>
     <link rel="self" href="https://whisper.github.io/atom.xml"/>
@@ -16,18 +16,6 @@
         <link href="https://whisper.github.io/post/ruan-jian-tui-jian-zhi-ni-zhi-de-yong-you-xi-lie/">
         </link>
         <updated>2020-10-23T07:55:38.000Z</updated>
-        <content type="html"><![CDATA[<ol>
-<li>
-<p>Shadowrocket, 外号小火箭，是用于使用ssr链接后用于翻墙的工具。苹果Apple store售价0.99刀。下载该软件可以通过PP助手安装。<a href="https://wwe.lanzous.com/ib7mkte">点击下载</a></p>
-</li>
-<li>
-<p>Iris Pro是一个护眼的软件,这是一个付费的软件，好像也就几块钱然后终生使用。想白嫖的 <a href="https://wwe.lanzous.com/ib7lrab">点击下载</a>，官网<a href="https://iristech.co/">下载地址</a></p>
-</li>
-<li>
-<p>Kitsunebi是一款支持V2ray协议的翻墙工具。苹果Apple Store售价4.99刀。下载该软件可以通过PP助手安装。[点击下载] (https://wwe.lanzous.com/ijrHuhtjv5g）</p>
-</li>
-</ol>
-]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Mockito完成单元测试(Unit Test)]]></title>
@@ -35,73 +23,6 @@
         <link href="https://whisper.github.io/post/mockito-wan-cheng-dan-yuan-ce-shi-unit-test/">
         </link>
         <updated>2020-10-23T06:10:26.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="1引入maven依赖"><strong>1.引入maven依赖</strong></h2>
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;org.mockito&lt;/groupId&gt;
-    &lt;artifactId&gt;mockito-core&lt;/artifactId&gt;
-    &lt;version&gt;2.23.4&lt;/version&gt;
-    &lt;scope&gt;test&lt;/scope&gt;
-&lt;/dependency&gt;
-</code></pre>
-<p><code>Note: 此处的scope最好选择test。 因为test的scope是不可以继承的，即使其他模块引用了你所在的模块，没有什么影响。由于该依赖和powermock(Mock静态方法依赖)存在版本不兼容问题，如果其他模块依赖了该模块并继承了你的Mockito，UT运行会报错。</code><br>
-<br/></p>
-<h2 id="2mock-普通方法"><strong>2.Mock 普通方法</strong></h2>
-<pre><code> @InjectMocks
- private ABCService abcService = new ABCServiceImpl();
-</code></pre>
-<ol>
-<li>校验boolean类型数据</li>
-</ol>
-<pre><code>ABC abc = new ABC();
-abc.setId(&quot;id&quot;);
-when(abcMapper.create(abc)).thenReturn(1);
-Assert.assertTrue(abcService.create(abc));
-</code></pre>
-<ol start="2">
-<li>校验返回数据</li>
-</ol>
-<pre><code>ABC exceptedABC = new ABC();
-ABC abc = new ABC();
-when(abcMapper.selectABCById(abc)).thenReturn(abc);
-ABC result = abcService.selectABCById(abc);
-Assert.assertEquals(exceptedABC, result);
-</code></pre>
-<ol start="3">
-<li>校验抛出异常方法</li>
-</ol>
-<pre><code>Assertions.assertThatThrownBy(() -&gt; abcService.getABCDetail(&quot;Id&quot;).isInstanceOf(abcException.class);
-</code></pre>
-<p>4.校验方法执行次数</p>
-<pre><code>Mockito.verify(abcService, Mockito.never()).abcGetUser(any(), anyList(), any()); //没有执行到
-Mockito.verify(abcService).abcGetUser(any(), anyList(), any()); //默认执行一次
-Mockito.verify(abcService, Mockito.times(n)).abcGetUser(any(), anyList(), any()); //执行n次
-</code></pre>
-<h2 id="3mock-同一个类中方法之间调用"><strong>3.Mock 同一个类中方法之间调用</strong></h2>
-<pre><code>@InjectMocks
-@Spy
-private ABCService abcService = new ABCServiceImpl();
-</code></pre>
-<pre><code>ABC abc = new ABC();
-doReturn(abc).when(abcService).getCount(anyString()); //
-</code></pre>
-<h2 id="4mock-静态方法"><strong>4.Mock 静态方法</strong></h2>
-<p>Mock静态方法需要引入如下依赖</p>
-<pre><code>    &lt;dependency&gt;
-      &lt;groupId&gt;org.powermock&lt;/groupId&gt;
-      &lt;artifactId&gt;powermock-api-mockito2&lt;/artifactId&gt;
-      &lt;version&gt;2.0.2&lt;/version&gt;
-      &lt;scope&gt;test&lt;/scope&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.powermock&lt;/groupId&gt;
-      &lt;artifactId&gt;powermock-module-junit4&lt;/artifactId&gt;
-      &lt;version&gt;2.0.2&lt;/version&gt;
-      &lt;scope&gt;test&lt;/scope&gt;
-    &lt;/dependency&gt;
-</code></pre>
-<p>这个依赖和上面的Mock依赖会有版本冲突的，慎用。<br>
-我现在一般就是让代码走到静态方法里面去。</p>
-]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[杭州]]></title>
@@ -109,8 +30,6 @@ doReturn(abc).when(abcService).getCount(anyString()); //
         <link href="https://whisper.github.io/post/hang-zhou-ying-jie-bi-ye-sheng-sheng-huo-bu-tie-shen-qing/">
         </link>
         <updated>2020-06-08T10:34:08.000Z</updated>
-        <content type="html"><![CDATA[<p>吧</p>
-]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[简单粗暴激活JRebel，让工作事倍功半]]></title>
@@ -118,22 +37,6 @@ doReturn(abc).when(abcService).getCount(anyString()); //
         <link href="https://whisper.github.io/post/jian-dan-cu-bao-ji-huo-jrebelrang-gong-zuo-shi-bei-gong-ban/">
         </link>
         <updated>2020-06-02T08:36:53.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="下载安装"><strong>下载安装</strong></h2>
-<p>在idea中点击file-&gt;settings，再点击plugins, 在搜索框中输入JRebel, 选择第一个插件并点击“install”按钮，安装完成后点击确定并重启idea。</p>
-<h2 id="离线激活"><strong>离线激活</strong></h2>
-<ol>
-<li>此处需要下载一个软件, <a href="https://wwe.lanzous.com/iaWNwhnw7xc">点击此处</a>下载 下载结束后打开软件准备激活JRebel;</li>
-<li>File-&gt;Setting-&gt;JRebel, 点击&quot;Change license&quot;按钮，选择“Team URL&quot;;</li>
-<li>输入以下任意一行链接：
-<ul>
-<li>http://127.0.0.1:8888/88414687-3b91-4286-89ba-2dc813b107ce</li>
-<li>http://127.0.0.1:8888/ff47a3ac-c11e-4cb2-836b-9b2b26101696</li>
-<li>http://127.0.0.1:8888/11d221d1-5cf0-4557-b023-4b4adfeeb36a</li>
-</ul>
-</li>
-<li>点击“Active”按钮，完成激活， 若提示激活失败多试试几次，不行的话把之前打开的软件重启一下；</li>
-</ol>
-]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[第一篇文章 先占个坑]]></title>
@@ -141,7 +44,5 @@ doReturn(abc).when(abcService).getCount(anyString()); //
         <link href="https://whisper.github.io/post/hello-gridea/">
         </link>
         <updated>2018-12-11T16:00:00.000Z</updated>
-        <content type="html"><![CDATA[<p>慢慢更新 一个月一到两篇吧~~</p>
-]]></content>
     </entry>
 </feed>
