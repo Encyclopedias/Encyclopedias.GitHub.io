@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://whisper.github.io</id>
+    <id>https://encyclopedias.github.io/</id>
     <title>Whisper</title>
-    <updated>2020-10-30T09:50:02.146Z</updated>
+    <updated>2020-10-30T10:00:20.703Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://whisper.github.io"/>
-    <link rel="self" href="https://whisper.github.io/atom.xml"/>
+    <link rel="alternate" href="https://encyclopedias.github.io/"/>
+    <link rel="self" href="https://encyclopedias.github.io/atom.xml"/>
     <subtitle>Easy</subtitle>
-    <logo>https://whisper.github.io/images/avatar.png</logo>
-    <icon>https://whisper.github.io/favicon.ico</icon>
+    <logo>https://encyclopedias.github.io/images/avatar.png</logo>
+    <icon>https://encyclopedias.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Whisper</rights>
     <entry>
         <title type="html"><![CDATA[软件推荐之你值得拥有系列(不定时更新)]]></title>
-        <id>https://whisper.github.io/post/ruan-jian-tui-jian-zhi-ni-zhi-de-yong-you-xi-lie/</id>
-        <link href="https://whisper.github.io/post/ruan-jian-tui-jian-zhi-ni-zhi-de-yong-you-xi-lie/">
+        <id>https://encyclopedias.github.io/post/ruan-jian-tui-jian-zhi-ni-zhi-de-yong-you-xi-lie/</id>
+        <link href="https://encyclopedias.github.io/post/ruan-jian-tui-jian-zhi-ni-zhi-de-yong-you-xi-lie/">
         </link>
         <updated>2020-10-23T07:55:38.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[Mockito完成单元测试(Unit Test)]]></title>
-        <id>https://whisper.github.io/post/mockito-wan-cheng-dan-yuan-ce-shi-unit-test/</id>
-        <link href="https://whisper.github.io/post/mockito-wan-cheng-dan-yuan-ce-shi-unit-test/">
+        <id>https://encyclopedias.github.io/post/mockito-wan-cheng-dan-yuan-ce-shi-unit-test/</id>
+        <link href="https://encyclopedias.github.io/post/mockito-wan-cheng-dan-yuan-ce-shi-unit-test/">
         </link>
         <updated>2020-10-23T06:10:26.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[杭州]]></title>
-        <id>https://whisper.github.io/post/hang-zhou-ying-jie-bi-ye-sheng-sheng-huo-bu-tie-shen-qing/</id>
-        <link href="https://whisper.github.io/post/hang-zhou-ying-jie-bi-ye-sheng-sheng-huo-bu-tie-shen-qing/">
+        <id>https://encyclopedias.github.io/post/hang-zhou-ying-jie-bi-ye-sheng-sheng-huo-bu-tie-shen-qing/</id>
+        <link href="https://encyclopedias.github.io/post/hang-zhou-ying-jie-bi-ye-sheng-sheng-huo-bu-tie-shen-qing/">
         </link>
         <updated>2020-06-08T10:34:08.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[简单粗暴激活JRebel，让工作事倍功半]]></title>
-        <id>https://whisper.github.io/post/jian-dan-cu-bao-ji-huo-jrebelrang-gong-zuo-shi-bei-gong-ban/</id>
-        <link href="https://whisper.github.io/post/jian-dan-cu-bao-ji-huo-jrebelrang-gong-zuo-shi-bei-gong-ban/">
+        <id>https://encyclopedias.github.io/post/jian-dan-cu-bao-ji-huo-jrebelrang-gong-zuo-shi-bei-gong-ban/</id>
+        <link href="https://encyclopedias.github.io/post/jian-dan-cu-bao-ji-huo-jrebelrang-gong-zuo-shi-bei-gong-ban/">
         </link>
         <updated>2020-06-02T08:36:53.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[第一篇文章 先占个坑]]></title>
-        <id>https://whisper.github.io/post/hello-gridea/</id>
-        <link href="https://whisper.github.io/post/hello-gridea/">
+        <id>https://encyclopedias.github.io/post/hello-gridea/</id>
+        <link href="https://encyclopedias.github.io/post/hello-gridea/">
         </link>
         <updated>2018-12-11T16:00:00.000Z</updated>
     </entry>
