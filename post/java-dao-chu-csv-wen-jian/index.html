@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="Easy">
 <meta name="theme-color" content="#000">
-<title>Mockito完成单元测试(Unit Test) | Whisper</title>
+<title>Java:导出CSV文件 | Whisper</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1611577446017">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/pisces.css">
@@ -39,8 +39,8 @@
   })();
 </script>
 
-  <meta name="description" content="Mockito完成单元测试(Unit Test)" />
-  <meta name="keywords" content="" />
+  <meta name="description" content="Java:导出CSV文件" />
+  <meta name="keywords" content="java,Tool" />
 </head>
 
 <body>
@@ -235,10 +235,16 @@
     <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#1%E5%BC%95%E5%85%A5maven%E4%BE%9D%E8%B5%96"><strong>1.引入maven依赖</strong></a></li>
-<li><a href="#2mock-%E6%99%AE%E9%80%9A%E6%96%B9%E6%B3%95"><strong>2.Mock 普通方法</strong></a></li>
-<li><a href="#3mock-%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E6%96%B9%E6%B3%95%E4%B9%8B%E9%97%B4%E8%B0%83%E7%94%A8"><strong>3.Mock 同一个类中方法之间调用</strong></a></li>
-<li><a href="#4mock-%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95"><strong>4.Mock 静态方法</strong></a></li>
+<li><a href="#1-csv%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D"><strong>1. CSV文件介绍</strong></a></li>
+<li><a href="#2%E5%AF%BC%E5%87%BAcsv%E6%96%87%E4%BB%B6%E4%BB%A3%E7%A0%81"><strong>2.导出CSV文件代码</strong></a><br>
+*
+<ul>
+<li><a href="#21%E5%88%9B%E5%BB%BA%E6%B3%A8%E8%A7%A3">2.1创建注解</a></li>
+<li><a href="#22-%E6%A0%B9%E6%8D%AE%E8%BE%93%E5%85%A5%E7%9A%84%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96%E5%AD%97%E8%8A%82%E6%B5%81">2.2 根据输入的数据获取字节流</a></li>
+<li><a href="#23-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97">2.3 使用指南</a></li>
+</ul>
+</li>
+<li><a href="#3%E8%B8%A9%E5%9D%91%E6%80%BB%E7%BB%93"><strong>3.踩坑总结</strong></a></li>
 </ul>
 </li>
 </ul>
@@ -506,8 +512,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://encyclopedias.github.io/post/mockito-wan-cheng-dan-yuan-ce-shi-unit-test/">
-      Mockito完成单元测试(Unit Test)
+    <a class="post-title-link" href="https://encyclopedias.github.io/post/java-dao-chu-csv-wen-jian/">
+      Java:导出CSV文件
     </a>
   </h1>
   <div class="post-meta">
@@ -515,23 +521,42 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2020-10-23</span>
+      <span>2021-01-25</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show">分类于</span>
+      
+      
+      <a href="https://encyclopedias.github.io/tag/Ze3s_k1m5/">
+        <span>java</span>
+      </a>、
+      
+      
+      
+      <a href="https://encyclopedias.github.io/tag/nbJhdRZfw/">
+        <span>Tool</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>3分钟</span>
+      <span>4分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>436<span class="pc-show">字数</span></span>
+      <span>678<span class="pc-show">字数</span></span>
     </span>
     
     
     
-    <span id="/post/mockito-wan-cheng-dan-yuan-ce-shi-unit-test/" data-flag-title="Mockito完成单元测试(Unit Test)" class="meta-item pc-show leancloud_visitors">
+    <span id="/post/java-dao-chu-csv-wen-jian/" data-flag-title="Java:导出CSV文件" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span>浏览量：<span class="leancloud-visitors-count"></span></span>
@@ -540,72 +565,94 @@
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <h2 id="1引入maven依赖"><strong>1.引入maven依赖</strong></h2>
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;org.mockito&lt;/groupId&gt;
-    &lt;artifactId&gt;mockito-core&lt;/artifactId&gt;
-    &lt;version&gt;2.23.4&lt;/version&gt;
-    &lt;scope&gt;test&lt;/scope&gt;
-&lt;/dependency&gt;
+              <h2 id="1-csv文件介绍"><strong>1. CSV文件介绍</strong></h2>
+<p>CSV(Comma-Separated Values，CSV，有时也称为字符分隔值，因为分隔字符也可以不是逗号)是一种通用的、相对简单的文件格式，被用户、商业和科学广泛应用。.csv 文件默认是被Excel打开的，也可用文本文档打开，因为本身就是一个文本文件。相比较excel文件而言，csv文件显得比价轻量级，但是不可以对csv文本的内容格式进行修改。通常情况下，只是作为数据的传递对格式并没有太多的要求，因此广泛被应用。</p>
+<h2 id="2导出csv文件代码"><strong>2.导出CSV文件代码</strong></h2>
+<h4 id="21创建注解">2.1创建注解</h4>
+<pre><code class="language-java">@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface ExportFileHeader {
+    String value() default &quot;&quot;;
+}
 </code></pre>
-<p><code>Note: 此处的scope最好选择test。 因为test的scope是不可以继承的，即使其他模块引用了你所在的模块，没有什么影响。由于该依赖和powermock(Mock静态方法依赖)存在版本不兼容问题，如果其他模块依赖了该模块并继承了你的Mockito，UT运行会报错。</code><br>
-<br/></p>
-<h2 id="2mock-普通方法"><strong>2.Mock 普通方法</strong></h2>
-<pre><code> @InjectMocks
- private ABCService abcService = new ABCServiceImpl();
+<h4 id="22-根据输入的数据获取字节流">2.2 根据输入的数据获取字节流</h4>
+<pre><code class="language-java">public class ExportFileUtil {
+
+    public static final String DOUBLE_QUOTES = &quot;\&quot;&quot;;
+    public static final String SPLITER = &quot;,&quot;;
+    public static final String LINE_ENDING = &quot;\r&quot;;
+
+    public static &lt;T&gt; byte[] exportCSVFile(List&lt;T&gt; list, Class&lt;T&gt; clazz, boolean withFileHeader) {
+        Field[] fields = clazz.getDeclaredFields();
+        StringBuffer stringBuffer = new StringBuffer();
+        List&lt;String&gt; fieldList = Lists.newArrayList();
+        //get the head of file
+
+        Arrays.stream(fields).filter(field -&gt; field.isAnnotationPresent(ExportFileHeader.class)).forEach(field -&gt; {
+            ExportFileHeader exportFileHeader = field.getAnnotation(ExportFileHeader.class);
+            String value = exportFileHeader.value();
+            fieldList.add(field.getName());
+            if (withFileHeader) {
+                stringBuffer.append(DOUBLE_QUOTES).append(value).append(DOUBLE_QUOTES).append(SPLITER);
+            }
+        });
+        if (StringUtils.isNotBlank(stringBuffer)) {
+            stringBuffer.deleteCharAt(stringBuffer.length() - 1).append(LINE_ENDING);
+        }
+
+        //handle the data
+        list.stream().forEach(data -&gt; {
+            Class dataClazz = data.getClass();
+            fieldList.stream().forEach(field -&gt; {
+                try {
+                    Field declaredField = dataClazz.getDeclaredField(field);
+                    declaredField.setAccessible(true);
+                    stringBuffer.append(DOUBLE_QUOTES).append(declaredField.get(data)).append(DOUBLE_QUOTES).append(SPLITER);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                }
+            });
+            if (StringUtils.isNotBlank(stringBuffer)) {
+                stringBuffer.deleteCharAt(stringBuffer.length() - 1).append(LINE_ENDING);
+            }
+        });
+        return stringBuffer.toString().getBytes(StandardCharsets.UTF_8);
+    }
+}
 </code></pre>
-<ol>
-<li>校验boolean类型数据</li>
-</ol>
-<pre><code>ABC abc = new ABC();
-abc.setId(&quot;id&quot;);
-when(abcMapper.create(abc)).thenReturn(1);
-Assert.assertTrue(abcService.create(abc));
+<h3 id="23-使用指南">2.3 使用指南</h3>
+<pre><code class="language-java">public class User{
+
+@ExportFileHeader(&quot;user name&quot;)
+private String userName;
+
+@ExportFileHeader(&quot;age&quot;)
+private int age;
+
+}
+
 </code></pre>
-<ol start="2">
-<li>校验返回数据</li>
-</ol>
-<pre><code>ABC exceptedABC = new ABC();
-ABC abc = new ABC();
-when(abcMapper.selectABCById(abc)).thenReturn(abc);
-ABC result = abcService.selectABCById(abc);
-Assert.assertEquals(exceptedABC, result);
+<p>导出的头如下所示：<br>
+<img src="/images/image.png" alt="image" loading="lazy"><br>
+通常情况下，分批获取数据再转换成流，所以<code>withFileHeader</code>是用于第一次调用<code>exportCSVFile</code>方法是要显示头的，因此第一次调用要设置成true，以后设置成false即可。</p>
+<pre><code class="language-java">public class Demo{
+     //demo 伪代码
+     public static void main(String args[]){
+               List&lt;User&gt; userList = Lists.newArrayList();
+               OutputStream os = response.getOutputStream();
+               byte[] bytes = ExportFileUtil.exportCSVFile(userList, User.class, true);
+               os.write(bytes);
+               bytes = ExportFileUtil.exportCSVFile(userList, User.class, false);
+               os.write(bytes);
+     }
+}
 </code></pre>
-<ol start="3">
-<li>校验抛出异常方法</li>
-</ol>
-<pre><code>Assertions.assertThatThrownBy(() -&gt; abcService.getABCDetail(&quot;Id&quot;).isInstanceOf(abcException.class);
-</code></pre>
-<p>4.校验方法执行次数</p>
-<pre><code>Mockito.verify(abcService, Mockito.never()).abcGetUser(any(), anyList(), any()); //没有执行到
-Mockito.verify(abcService).abcGetUser(any(), anyList(), any()); //默认执行一次
-Mockito.verify(abcService, Mockito.times(n)).abcGetUser(any(), anyList(), any()); //执行n次
-</code></pre>
-<h2 id="3mock-同一个类中方法之间调用"><strong>3.Mock 同一个类中方法之间调用</strong></h2>
-<pre><code>@InjectMocks
-@Spy
-private ABCService abcService = new ABCServiceImpl();
-</code></pre>
-<pre><code>ABC abc = new ABC();
-doReturn(abc).when(abcService).getCount(anyString()); //
-</code></pre>
-<h2 id="4mock-静态方法"><strong>4.Mock 静态方法</strong></h2>
-<p>Mock静态方法需要引入如下依赖</p>
-<pre><code>    &lt;dependency&gt;
-      &lt;groupId&gt;org.powermock&lt;/groupId&gt;
-      &lt;artifactId&gt;powermock-api-mockito2&lt;/artifactId&gt;
-      &lt;version&gt;2.0.2&lt;/version&gt;
-      &lt;scope&gt;test&lt;/scope&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.powermock&lt;/groupId&gt;
-      &lt;artifactId&gt;powermock-module-junit4&lt;/artifactId&gt;
-      &lt;version&gt;2.0.2&lt;/version&gt;
-      &lt;scope&gt;test&lt;/scope&gt;
-    &lt;/dependency&gt;
-</code></pre>
-<p>这个依赖和上面的Mock依赖会有版本冲突的，慎用。<br>
-我现在一般就是让代码走到静态方法里面去。</p>
+<h2 id="3踩坑总结"><strong>3.踩坑总结</strong></h2>
+<p>由于csv文件可被excel文件打开，可是excel文件会对15为以上的数字进行科学计数法，并将其多余的位数置0，这就导致会发生一些问题。例如身份证号等。因此导出的数据用excel打开时会出现后几位被置0的情况，但是使用notepad等软件打开还是正常显示。<br>
+<font color = 'red'>解决办法：</font>在这种类似身份证号后面加一个制表符<code>\t</code>，这可解决excel打开文本置0的问题但是这样让文本软件打开时候数字后会有一个表单位的空白。</p>
 
             </div>
             <div class="post-footer">
@@ -616,7 +663,7 @@ doReturn(abc).when(abcService).getCount(anyString()); //
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://encyclopedias.github.io/post/mockito-wan-cheng-dan-yuan-ce-shi-unit-test/" title="Mockito完成单元测试(Unit Test)">https://encyclopedias.github.io/post/mockito-wan-cheng-dan-yuan-ce-shi-unit-test/</a>
+      <a href="https://encyclopedias.github.io/post/java-dao-chu-csv-wen-jian/" title="Java:导出CSV文件">https://encyclopedias.github.io/post/java-dao-chu-csv-wen-jian/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -625,19 +672,19 @@ doReturn(abc).when(abcService).getCount(anyString()); //
   </ul>
   <div class="tags">
     
+      <a href="https://encyclopedias.github.io/tag/Ze3s_k1m5/"># java</a>
+    
+      <a href="https://encyclopedias.github.io/tag/nbJhdRZfw/"># Tool</a>
+    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="软件推荐之你值得拥有系列(不定时更新)" href="https://encyclopedias.github.io/post/ruan-jian-tui-jian-zhi-ni-zhi-de-yong-you-xi-lie/">软件推荐之你值得拥有系列(不定时更新)</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="软件推荐之你值得拥有系列(不定时更新)" href="https://encyclopedias.github.io/post/ruan-jian-tui-jian-zhi-ni-zhi-de-yong-you-xi-lie/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="杭州" href="https://encyclopedias.github.io/post/hang-zhou-ying-jie-bi-ye-sheng-sheng-huo-bu-tie-shen-qing/">杭州</a>
-        <a class="nav-mobile-next" title="杭州" href="https://encyclopedias.github.io/post/hang-zhou-ying-jie-bi-ye-sheng-sheng-huo-bu-tie-shen-qing/">下一篇</a>
+        <a class="nav-pc-next" title="Mysql:根据现存数据生成insert语句" href="https://encyclopedias.github.io/post/mysql-de-shen-qi-cao-zuo-cao-zuo/">Mysql:根据现存数据生成insert语句</a>
+        <a class="nav-mobile-next" title="Mysql:根据现存数据生成insert语句" href="https://encyclopedias.github.io/post/mysql-de-shen-qi-cao-zuo-cao-zuo/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
