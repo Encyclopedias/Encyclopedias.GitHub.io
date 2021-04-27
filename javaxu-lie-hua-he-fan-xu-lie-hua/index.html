@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="Easy">
 <meta name="theme-color" content="#000">
-<title>Wizard</title>
+<title>Java:序列化和反序列化 | Wizard</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1619523907808">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/pisces.css">
@@ -39,6 +39,8 @@
   })();
 </script>
 
+  <meta name="description" content="Java:序列化和反序列化" />
+  <meta name="keywords" content="" />
 </head>
 
 <body>
@@ -74,7 +76,7 @@
             
               
             
-            <li class="nav-item nav-item-active">
+            <li class="nav-item ">
               
               
                 <a href="/" target="_self">
@@ -153,8 +155,24 @@
     <div
       class="section-layout pisces ">
       <div class="section-layout-wrapper">
-        <div id="sidebarMeta" class="sidebar">
-    
+        
+
+<div class="sidebar">
+  
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
+      
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item">站点概览</span>
+          </div>
+        </div>
+      
+      <div class="sidebar-body pisces" id="sidebar_body">
+        
+          
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -196,127 +214,297 @@
 
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#1%E6%A6%82%E5%BF%B5%E4%B8%8E%E4%BD%9C%E7%94%A8"><strong>1.概念与作用</strong></a>
+<ul>
+<li><a href="#11%E6%A6%82%E5%BF%B5">1.1概念</a>
+<ul>
+<li><a href="#%E4%B8%A4%E7%A7%8D%E4%BD%9C%E7%94%A8">两种作用：</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#2%E5%AF%B9%E8%B1%A1%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><strong>2.对象序列化和反序列化</strong></a>
+<ul>
+<li><a href="#21jdk%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96api">2.1JDK的序列化API</a></li>
+<li><a href="#22%E4%BD%BF%E7%94%A8jackson%E5%BA%8F%E5%88%97%E5%8C%96">2.2使用Jackson序列化</a></li>
+<li><a href="#23%E4%BD%BF%E7%94%A8jackson%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BA%8F%E5%88%97%E5%8C%96">2.3使用Jackson自定义序列化</a></li>
+<li><a href="#24-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BA%8F%E5%88%97%E5%8C%96%E5%8F%8A%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%99%A8">2.4 自定义序列化及反序列化类型转换器</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
 </div>
+
 <script>
-  let sidebarMeta = document.querySelector('#sidebarMeta');
-  let scheme = 'pisces';
-  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
-  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
-    document.addEventListener('scroll', function(e) {
-      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
-        sidebarWrapper.classList.add('home-sidebar-fixed')
-      } else {
-        sidebarWrapper.classList.remove('home-sidebar-fixed')
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
       }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
     });
   }
-  </script>
-        <div class="section-box pisces">
-          <section class="section bg-color posts-expand slide-down-in">
-            
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://encyclopedias.github.io/fan-she-tian-chong-qian-tao-dui-xiang-de-shu-xing-zhi/">
-      反射:填充嵌套对象的属性值
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2021-03-08</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>3分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>419<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
-        
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
           
         
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://encyclopedias.github.io/fan-she-tian-chong-qian-tao-dui-xiang-de-shu-xing-zhi/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
       </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
     </div>
-  </article>
+  
+</div>
+<script>
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
 
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://encyclopedias.github.io/jdk8you-ya-shi-yong-lambda-biao-da-shi/">
-      JDK8:优雅使用lambda表达式
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2021-03-08</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>1分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>1<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
-        
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://encyclopedias.github.io/jdk8you-ya-shi-yong-lambda-biao-da-shi/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
 
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    window.Velocity(hideElement, 'stop');
+    window.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        window.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
+      }
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
+  }
+
+  postToc && postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+  if (sidebarBody) {
+    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+      let hasFix = false;
+      let scrollEl = document.querySelector('.main-continer');
+      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+      window.addEventListener('scroll', function(e) {
+        if (document.scrollingElement.scrollTop >= limitTop) {
+          if (!hasFix) {
+            sidebar.classList.add('sidebar-fixed');
+            hasFix = true;
+          }
+        } else {
+          if (hasFix) {
+            sidebar.classList.remove('sidebar-fixed');
+            hasFix = false;
+          }
+        }
+      });
+    }
+  }
+  
+</script>
+        <div class="section-box box-shadow-wrapper">
+          <div class="section bg-color post post-page">
+            <header class="post-header">
   <h1 class="post-title">
     <a class="post-title-link" href="https://encyclopedias.github.io/javaxu-lie-hua-he-fan-xu-lie-hua/">
       Java:序列化和反序列化
@@ -341,499 +529,349 @@
       <span>1485<span class="pc-show">字数</span></span>
     </span>
     
-  </div>
-</header>
-      <div class="post-body">
-        
-        
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://encyclopedias.github.io/javaxu-lie-hua-he-fan-xu-lie-hua/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
-
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://encyclopedias.github.io/mysqlpi-liang-cha-ru-id-zi-zeng-shu-ju-ce-shi-shu-ju/">
-      Mysql:批量插入id自增数据(测试数据)
-    </a>
-  </h1>
-  <div class="post-meta">
     
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2021-03-01</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
     
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show">分类于</span>
-      
-      
-      <a href="https://encyclopedias.github.io/uKzHC2y22/">
-        <span>mysql</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>2分钟</span>
-    </span>
-    <span class="meta-item">
+    <span id="/javaxu-lie-hua-he-fan-xu-lie-hua/" data-flag-title="Java:序列化和反序列化" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>408<span class="pc-show">字数</span></span>
+      <i class="fa fa-eye"></i>
+      <span>浏览量：<span class="leancloud-visitors-count"></span></span>
     </span>
     
   </div>
 </header>
-      <div class="post-body">
-        
-        
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://encyclopedias.github.io/mysqlpi-liang-cha-ru-id-zi-zeng-shu-ju-ce-shi-shu-ju/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
+            <div class="post-body next-md-body" id="post_body">
+              <h2 id="1概念与作用"><strong>1.概念与作用</strong></h2>
+<h3 id="11概念">1.1概念</h3>
+<p><code>序列化：</code>对象转换为字节序列的过程，本质上是将一个对象转换成<font color="red">二进制</font>的byte[]数组<br>
+<code>反序列化：</code>字节序列恢复为对象的过程</p>
+<h4 id="两种作用">两种作用：</h4>
+<ul>
+<li>将对象序列化后永久的保存到硬盘中，通常是存在一个文件中；</li>
+<li>在网络通信传递数据时需要；网络之间的通信均是使用二进制的形式互相通信，无论是发送还是接受，因为序列化和反序列化对网络通信至关重要。</li>
+</ul>
+<h2 id="2对象序列化和反序列化"><strong>2.对象序列化和反序列化</strong></h2>
+<h3 id="21jdk的序列化api">2.1JDK的序列化API</h3>
+<ol>
+<li>java.io.ObjectOutputStream代表对象输出流，它的writeObject(Object obj)方法可对参数指定的obj对象进行序列化，把得到的字节序列写到一个目标输出流中。</li>
+<li>java.io.ObjectInputStream代表对象输入流，它的readObject()方法从一个源输入流中读取字节序列，再把它们反序列化为一个对象，并将其返回。<br>
+<font color="red">注意：</font><br>
+前提是实现Serializable接口；<br>
+transient关键字修饰的字段不进行序列化；<br>
+静态字段不会序列化；<br>
+Externalizable接口使用实现自定序列化；</li>
+</ol>
+<h3 id="22使用jackson序列化">2.2使用Jackson序列化</h3>
+<p>Jackson是SpringBoot自带的Json数据处理依赖包，但是其不依赖于Spring的库。<br>
+<font color=blue ><b>1.  @JsonProperty：用于改变某个字段序列化的名；</b></font></p>
+<pre><code class="language-java">public class Human{
 
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://encyclopedias.github.io/zhu-jie-yu-fan-she/">
-      注解与反射
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2021-01-27</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show">分类于</span>
-      
-      
-      <a href="https://encyclopedias.github.io/Ze3s_k1m5/">
-        <span>java</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>6分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>1170<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
-        
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://encyclopedias.github.io/zhu-jie-yu-fan-she/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
+   @JsonProperty(&quot;first_name&quot;)
+    private String firstName;
 
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://encyclopedias.github.io/java-dao-chu-csv-wen-jian/">
-      Java:导出CSV文件
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2021-01-25</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show">分类于</span>
-      
-      
-      <a href="https://encyclopedias.github.io/Ze3s_k1m5/">
-        <span>java</span>
-      </a>、
-      
-      
-      
-      <a href="https://encyclopedias.github.io/nbJhdRZfw/">
-        <span>Tool</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>4分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>678<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
-        
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://encyclopedias.github.io/java-dao-chu-csv-wen-jian/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
+}
+</code></pre>
+<p><font color=blue ><b>2. @JsonInclude: 将某个为null的字段不显示在序列化结果中；</b></font></p>
+<pre><code class="language-java">全局：
+ ObjectMapper mapper = new ObjectMapper();
+ mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://encyclopedias.github.io/mysql-de-shen-qi-cao-zuo-cao-zuo/">
-      Mysql:根据现存数据生成insert语句
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2020-12-30</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show">分类于</span>
-      
-      
-      <a href="https://encyclopedias.github.io/uKzHC2y22/">
-        <span>mysql</span>
-      </a>、
-      
-      
-      
-      <a href="https://encyclopedias.github.io/Ze3s_k1m5/">
-        <span>java</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>4分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>815<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
-        
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://encyclopedias.github.io/mysql-de-shen-qi-cao-zuo-cao-zuo/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
+ 某个字段：
+ @JsonInclude(JsonInclude.Include.NON_NULL)
+ private String name;
+</code></pre>
+<p><font color=blue ><b>3. @JsonIgnore 和 @JsonIgnoreProperties 忽略某个字段，不对其进行序列化操作;</b></font></p>
+<pre><code class="language-java">@JsonIgnoreProperties({&quot;age&quot;})
+ public class Human{
 
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://encyclopedias.github.io/jwtcong-li-lun-dao-shi-jian/">
-      JWT:从理论到实践
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2020-12-23</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show">分类于</span>
-      
-      
-      <a href="https://encyclopedias.github.io/Ze3s_k1m5/">
-        <span>java</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>3分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>681<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
-        
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://encyclopedias.github.io/jwtcong-li-lun-dao-shi-jian/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
+    @JsonIgnore
+    private String firstName;
 
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://encyclopedias.github.io/ruan-jian-tui-jian-zhi-ni-zhi-de-yong-you-xi-lie/">
-      软件推荐之你值得拥有系列(不定时更新)
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2020-10-23</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show">分类于</span>
-      
-      
-      <a href="https://encyclopedias.github.io/01Xc047vN/">
-        <span>Software</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>1分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>184<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
-        
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://encyclopedias.github.io/ruan-jian-tui-jian-zhi-ni-zhi-de-yong-you-xi-lie/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
+    private int age;
+}
+</code></pre>
+<p><font color=blue ><b>4. @JsonAlias 使用别名</b></font></p>
+<pre><code class="language-java">   public class Human{
 
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://encyclopedias.github.io/mockito-wan-cheng-dan-yuan-ce-shi-unit-test/">
-      Mockito完成单元测试(Unit Test)
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2020-10-23</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>3分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>436<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
-        
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://encyclopedias.github.io/mockito-wan-cheng-dan-yuan-ce-shi-unit-test/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
-  
-            
-            
-<div class="page bg-color">
-  <ul class="pagination-ul">
-    
-    
-      
-        <li class="pagination-li pagination-active">
-            <a href="/page/../">
-              1
-            </a>
-        </li>
-      
-        <li class="pagination-li ">
-            <a href="/page/2">
-              2
-            </a>
-        </li>
-      
-    
-    
-      <li class="pagination-dir">
-        <a href="/page/2">
-          <i class="fa fa-angle-right"></i>
-        </a>
-      </li>
-    
+    @JsonAlias({&quot;first_name, name, firstName&quot;})
+    private String firstName;
+
+    private int age;
+}
+</code></pre>
+<p>在反序列化时，json字符串中有<code>first_name</code>, <code>name</code> 或者是 <code>firstName</code>均可以正确序列化成对象的字段<code>firstName</code></p>
+<h3 id="23使用jackson自定义序列化">2.3使用Jackson自定义序列化</h3>
+<p>序列化的过程通过get方法获取对象的属性数据，反序列化过程是先调用目标对象的无参构造函数生成一个对象，再通过对象的set方法为对象中的每一个属性进行赋值。因此一个对象想要序列化则必须有get, set 和public的无参构造函数（java中不声明默认会有）<br>
+<font color=blue ><b>1. 使用 @JsonCreator</b></font></p>
+<pre><code class="language-java">
+public class CustomSerialization {
+    public static void main(String[] args) throws IOException {
+        Human human = new Human(&quot;zhangsan&quot;, 1, Lists.newArrayList(&quot;eat&quot;, &quot;sleep&quot;));
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonString = objectMapper.writeValueAsString(human);
+        System.out.println(jsonString);
+        Human humanFromSer = objectMapper.readValue(jsonString, Human.class);
+        System.out.println(humanFromSer);
+    }
+    public static class Human{
+
+        private String name;
+
+        private int sex;
+
+        private List&lt;String&gt; hobbies;
+
+        @JsonCreator
+        private Human(@JsonProperty(&quot;name&quot;) String name, @JsonProperty(&quot;sex&quot;) int sex, @JsonProperty(&quot;hobbies&quot;) List&lt;String&gt; hobbies){
+            this.name = name;
+            this.sex = sex;
+            this.hobbies = hobbies;
+        }
+        public String getName() {
+            return name;
+        }
+        public int getSex() {
+            return sex;
+        }
+        public List&lt;String&gt; getHobbies() {
+            return hobbies;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+        public void setSex(int sex) {
+            this.sex = sex;
+        }
+        public void setHobbies(List&lt;String&gt; hobbies) {
+            this.hobbies = hobbies;
+        }
+    }
+}
+</code></pre>
+<p><code>Note:使用@JsonCreator时，其构造函数必须有@JsonProperty作为转换</code></p>
+<p><font color=blue ><b>2. 使用 @ConstructorProperties</b></font><br>
+<code>@JsonCreator</code> 和 <code>@ConstructorProperties</code> 作用使一致的，后者只能加在构造方法上，作为反序列化函数，后者使用起来比前者方便。不需要在构造函数中每个属性名前加@JsonProperty注解。</p>
+<pre><code class="language-java">    @ConstructorProperties({&quot;name&quot;, &quot;sex&quot;, &quot;hobbies&quot;})
+        private Human( String name,  int sex,  List&lt;String&gt; hobbies){
+            this.name = name;
+            this.sex = sex;
+            this.hobbies = hobbies;
+        }
+</code></pre>
+<p><code>Note: 该注解中的属性名称必须和构造函数中的属性名称保持一致，不然会解析失败报错</code></p>
+<h3 id="24-自定义序列化及反序列化类型转换器">2.4 自定义序列化及反序列化类型转换器</h3>
+<p><font color=blue ><b>1. 继承StdConverter类</b></font><br>
+定义了一个Money类， 该类中定义一个final的字段， 这是为了不允许Json反序列化时调用set方法</p>
+<pre><code class="language-java">public class CustomSerialization {
+    public static void main(String[] args) throws IOException {
+        Human human = new Human();
+        human.setName(&quot;zhangdan&quot;);
+        human.setSex(1);
+        human.setHobbies(Lists.newArrayList(&quot;eat&quot;, &quot;sleep&quot;));
+        Money money = new Money(&quot;USD&quot;);
+        human.setMonies(Lists.newArrayList(money));
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonString = objectMapper.writeValueAsString(human);
+        System.out.println(jsonString);
+        Human humanFromSer = objectMapper.readValue(jsonString, Human.class);
+        System.out.println(humanFromSer);
+    }
+    public static class Human{
+
+        private String name;
+
+        private int sex;
+
+        private List&lt;String&gt; hobbies;
+
+        @JsonSerialize(converter = MoneyConverter.class)
+        @JsonDeserialize(converter = MoneyDeserialize.class)
+        private List&lt;Money&gt; money;
+
+        public String getName() {
+            return name;
+        }
+        public int getSex() {
+            return sex;
+        }
+        public List&lt;String&gt; getHobbies() {
+            return hobbies;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+        public void setSex(int sex) {
+            this.sex = sex;
+        }
+        public void setHobbies(List&lt;String&gt; hobbies) {
+            this.hobbies = hobbies;
+        }
+        public List&lt;Money&gt; getMoney() {
+            return money;
+        }
+
+        public void setMonies(List&lt;Money&gt; money) {
+            this.money = money;
+        }
+    }
+    public static class Money{
+        private final String type;
+
+        public Money(String type) {
+            this.type = type;
+        }
+        public String getType() {
+            return type;
+        }
+    }
+}
+
+public class MoneyConverter extends StdConverter&lt;List&lt;CustomSerialization.Money&gt;, List&lt;String&gt;&gt; {
+    @Override
+    public List&lt;String&gt; convert(List&lt;CustomSerialization.Money&gt; money) {
+        return money.stream().map(CustomSerialization.Money::getType).collect(Collectors.toList());
+    }
+}
+
+public class MoneyDeserialize extends StdConverter&lt;List&lt;String&gt;, List&lt;CustomSerialization.Money&gt;&gt; {
+    @Override
+    public List&lt;CustomSerialization.Money&gt; convert(List&lt;String&gt; strings) {
+        return  strings.stream().map(str -&gt;new CustomSerialization.Money(str)).collect(Collectors.toList());
+    }
+}
+</code></pre>
+<p><code>Note: 使用继承StdConverter的方式时， @JsonSerialize使用converter方法</code></p>
+<p><font color=blue ><b>2. 继承JsonSerializer和JsonDeserializer类</b></font></p>
+<pre><code class="language-java">@Data
+public class Person {
+    private int age;
+    private String address;
+    private Man man;
+    private List&lt;Man&gt; men;
+    @Data
+    public static class Man{
+        @JsonSerialize(using = TimeSerializer.class)
+        @JsonDeserialize(using = TimeDeserializer.class)
+        private Instant time;
+        private Woman wife;
+    }
+    @Data
+    public static class Woman{
+        private String style;
+        private int beforeBoyFriends;
+    }
+    public static void main(String[] args) throws IOException {
+        Person person = new Person();
+        person.setAge(30);
+        person.setAddress(&quot;NewYork&quot;);
+        Woman woman = new Woman();
+        woman.setStyle(&quot;style&quot;);
+        woman.setBeforeBoyFriends(3);
+        Man man1 = new Man();
+        man1.setWife(woman);
+        man1.setTime(Instant.now());
+        person.setMan(man1);
+
+        Man man2 = new Man();
+        man2.setWife(woman);
+        man2.setTime(Instant.now());
+        person.setMen(Lists.newArrayList(man1, man2));
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonString = objectMapper.writeValueAsString(person);
+        System.out.println(jsonString);
+        Person personDemo= objectMapper.readValue(jsonString, Person.class);
+        System.out.println(personDemo.toString());
+    }
+}
+</code></pre>
+<p>总结：这种自定义序列化的方式只支持某个字段的。 如果某个List存储的是一个多属性的对象，并且你想对该对象进行选择性或自定义序列化，此时你只能对该对象中的字段进行操作，而不能对其整个List对象进行操作。如果有大佬知道通知一下小编。</p>
+
+            </div>
+            <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      微热的吴
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://encyclopedias.github.io/javaxu-lie-hua-he-fan-xu-lie-hua/" title="Java:序列化和反序列化">https://encyclopedias.github.io/javaxu-lie-hua-he-fan-xu-lie-hua/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
+    </li>
   </ul>
+  <div class="tags">
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
+      
+        <i class="fa fa-chevron-left"></i>
+        <a class="nav-pc-next" title="JDK8:优雅使用lambda表达式" href="https://encyclopedias.github.io/jdk8you-ya-shi-yong-lambda-biao-da-shi/">JDK8:优雅使用lambda表达式</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="JDK8:优雅使用lambda表达式" href="https://encyclopedias.github.io/jdk8you-ya-shi-yong-lambda-biao-da-shi/">上一篇</a>
+      
+    </div>
+    <div class="nav-next">
+      
+        <a class="nav-pc-next" title="Mysql:批量插入id自增数据(测试数据)" href="https://encyclopedias.github.io/mysqlpi-liang-cha-ru-id-zi-zeng-shu-ju-ce-shi-shu-ju/">Mysql:批量插入id自增数据(测试数据)</a>
+        <a class="nav-mobile-next" title="Mysql:批量插入id自增数据(测试数据)" href="https://encyclopedias.github.io/mysqlpi-liang-cha-ru-id-zi-zeng-shu-ju-ce-shi-shu-ju/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
+      
+    </div>
+  </div>
 </div>
-          </section>
+            
+  <script src="https://cdn.jsdelivr.net/npm/valine@1.4.4/dist/Valine.min.js"></script>
+<div id="vcomments" style="padding: 10px 0px 0px 0px"></div>
+
+<style>
+  .v .veditor {
+    min-height: 10rem;
+    background-image: url('https://upimage.alexhchu.com/2020/04/21/47eda59424daa.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: rgba(255, 255, 255, 0);
+    resize: none;
+  }
+
+  .v .vwrap {
+    border: 1px solid #000 !important;
+  }
+
+  .v .vbtn {
+    padding: .4rem 1.2rem !important;
+    border-color: #fff !important;
+    background-color: #49b1f5 !important;
+    color: #fff !important;
+    font-size: .7rem !important;
+  }
+
+  .v .vcards .vcard .vh .vmeta .vat {
+    padding: 0 .8rem !important;
+    border: 1px solid #00c4b6 !important;
+    border-radius: 5px !important;
+    color: #00c4b6 !important;
+  }
+</style>
+<script>
+  new Valine({
+    el: '#vcomments',
+    appId: 'E7L4jTeh0jA3mQBlwFJsQI8P-9Nh9j0Va',
+    appKey: 'pNY3E0TMB0tqUJYEgjWimXlO',
+    avatar: 'mp',
+    placeholder: '',
+    pageSize: '',
+    lang: 'zh-cn',
+    visitor: 'true' === 'true',
+    highlight: 'true' === 'true',
+    avatarForce: 'true' === 'false',
+  });
+</script>
+
+          </div>
         </div>
       </div>
     </div>
@@ -2126,6 +2164,5 @@ doReturn(abc).when(abcService).getCount(anyString()); //
 
 
 <script src=" /media/js/cool.js"></script>
-
 
 </html>
