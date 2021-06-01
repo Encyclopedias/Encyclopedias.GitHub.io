@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="Easy">
 <meta name="theme-color" content="#000">
-<title>Wizard</title>
+<title>什么是SPI机制 | Wizard</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1622549346678">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/pisces.css">
@@ -39,6 +39,8 @@
   })();
 </script>
 
+  <meta name="description" content="什么是SPI机制" />
+  <meta name="keywords" content="" />
 </head>
 
 <body>
@@ -100,7 +102,7 @@
             
               
             
-            <li class="nav-item nav-item-active">
+            <li class="nav-item ">
               
               
                 <a href="/tags/" target="_self">
@@ -151,10 +153,26 @@
   <div class="main-continer">
     
     <div
-      class="section-layout  pisces">
+      class="section-layout pisces ">
       <div class="section-layout-wrapper">
-        <div id="sidebarMeta" class="sidebar">
-    
+        
+
+<div class="sidebar">
+  
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
+      
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item">站点概览</span>
+          </div>
+        </div>
+      
+      <div class="sidebar-body pisces" id="sidebar_body">
+        
+          
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -196,370 +214,499 @@
 
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#1spi%E4%BB%8B%E7%BB%8D"><strong>1.SPI介绍</strong></a></li>
+<li><a href="#2spi%E7%9A%84%E7%94%A8%E6%B3%95"><strong>2.SPI的用法</strong></a></li>
+<li><a href="#3spi%E7%9A%84%E7%AE%80%E5%8D%95demo"><strong>3.SPI的简单Demo</strong></a>
+<ul>
+<li><a href="#spi-%E7%9A%84demo%E7%BB%93%E6%9E%84">SPI 的Demo结构</a></li>
+<li><a href="#spi-%E7%9A%84demo%E4%BB%A3%E7%A0%81">SPI 的Demo代码</a></li>
+</ul>
+</li>
+<li><a href="#4spi%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8"><strong>4.SPI的实际应用</strong></a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
 </div>
+
 <script>
-  let sidebarMeta = document.querySelector('#sidebarMeta');
-  let scheme = 'pisces';
-  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
-  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
-    document.addEventListener('scroll', function(e) {
-      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
-        sidebarWrapper.classList.add('home-sidebar-fixed')
-      } else {
-        sidebarWrapper.classList.remove('home-sidebar-fixed')
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
       }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
     });
   }
-  </script>
-        <div class="section-box box-shadow-wrapper">
-          <section class="section tags-section bg-color posts-expand">
-            <div class="tags-box">
-  <div class="tag-cloud-title">
-    目前共计 5 个标签
-  </div>
-  <div class="tag-cloud-list" id="tags">
-    
-      
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-          
-            
-      
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-            
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://encyclopedias.github.io/uKzHC2y22/" rel="2">mysql</a>
-    
-      
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-          
-        
-      
-        
-          
-            
-      
-        
-          
-            
-      
-        
-          
-        
-          
-            
-      
-        
-          
-            
-      
-        
-          
-        
-      
-        
-      
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://encyclopedias.github.io/Ze3s_k1m5/" rel="4">java</a>
-    
-      
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-          
-            
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-      
-        
-          
-            
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://encyclopedias.github.io/nbJhdRZfw/" rel="2">Tool</a>
-    
-      
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-            
-      
-        
-      
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://encyclopedias.github.io/01Xc047vN/" rel="1">Software</a>
-    
-      
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-            
-      
-      <a class="cloud-tag" href="https://encyclopedias.github.io/G9fZzd7V4/" rel="1">Gridea</a>
-    
-  </div>
-</div>
-<script>
 
-  let fontStart = 12, fontEnd = 30, colorStart = '#666', colorEnd = '#000';
-  let tags = document.querySelector('#tags').children;
-  let counts = [];
-  for(let i = 0; i < tags.length; i++) {
-    counts.push(tags[i].rel);
-  }
-  let lowest = Math.min.apply(null,counts), highest = Math.max.apply(null,counts);;
-  let range = highest - lowest;
-  if (range === 0) {
-    range = 1;
-  }
-  let fontIncr, colorIncr;
-  fontIncr = (fontEnd - fontStart) / range;
-  
-  let sColorArr = toRGB(colorStart), eColorArr = toRGB(colorEnd);
-
-  for(let i = 0; i < tags.length; i++) {
-    let disCount = tags[i].rel - lowest;
-    let fontSize = fontStart + disCount * fontIncr;
-    let style = 'font-size: ' + fontSize + 'px;';
-    let arr = [];
-    for(let c = 0; c < sColorArr.length; c++) {
-      if (disCount === 0) {
-        disCount = 1;
-      }
-      let val = (sColorArr[c] - eColorArr[c]) / range * disCount;
-      if (val >= 100) {
-        val = eColorArr[c];
-      } else if (val <= 0) {
-        val = sColorArr[c];
-      }
-      arr[c] = Math.floor(val);
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
     }
-    style += 'color: ' + toHex(arr);
-    tags[i].style = style;
   }
 
-  function toRGB(code) {
-    if (code.length === 4) {
-      code = code.replace(/(\w)(\w)(\w)/gi, "\$1\$1\$2\$2\$3\$3");
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
     }
-    var hex = /(\w{2})(\w{2})(\w{2})/.exec(code);
-    return [parseInt(hex[1], 16), parseInt(hex[2], 16), parseInt(hex[3], 16)];
   }
 
-  function toHex(ary) {
-    return "#" + ((1 << 24) + (ary[0] << 16) + (ary[1] << 8) + ary[2]).toString(16).slice(1);
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
   }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
 
 </script>
-          </section>
+            </div>
+          
+        
+      </div>
+    </div>
+  
+</div>
+<script>
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
+
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
+
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    window.Velocity(hideElement, 'stop');
+    window.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        window.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
+      }
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
+  }
+
+  postToc && postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+  if (sidebarBody) {
+    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+      let hasFix = false;
+      let scrollEl = document.querySelector('.main-continer');
+      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+      window.addEventListener('scroll', function(e) {
+        if (document.scrollingElement.scrollTop >= limitTop) {
+          if (!hasFix) {
+            sidebar.classList.add('sidebar-fixed');
+            hasFix = true;
+          }
+        } else {
+          if (hasFix) {
+            sidebar.classList.remove('sidebar-fixed');
+            hasFix = false;
+          }
+        }
+      });
+    }
+  }
+  
+</script>
+        <div class="section-box box-shadow-wrapper">
+          <div class="section bg-color post post-page">
+            <header class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://encyclopedias.github.io/shi-me-shi-spi-ji-zhi/">
+      什么是SPI机制
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span>发布于</span>
+      <span>2021-05-19</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>3分钟</span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>577<span class="pc-show">字数</span></span>
+    </span>
+    
+    
+    
+    <span id="/shi-me-shi-spi-ji-zhi/" data-flag-title="什么是SPI机制" class="meta-item pc-show leancloud_visitors">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-eye"></i>
+      <span>浏览量：<span class="leancloud-visitors-count"></span></span>
+    </span>
+    
+  </div>
+</header>
+            <div class="post-body next-md-body" id="post_body">
+              <h2 id="1spi介绍"><strong>1.SPI介绍</strong></h2>
+<p>SPI的全名是<code>Service Provider Interface</code>, JDK 内置的一种服务提供机制，用于提升接口的可扩展性，其最终的目的是用于模块之间的解耦，减少相互依赖。</p>
+<h2 id="2spi的用法"><strong>2.SPI的用法</strong></h2>
+<ol>
+<li>服务的提供方对调用方的接口提供了一种实现， 在jar包中resource的<code>META-INF/services</code>目录下创建一个接口的全限定名的文件，该文件的内容是是实现类的全限定名；</li>
+<li>在主程序中使用java的util包中的<code>ServiceLoader</code>加载该接口从而获取该实现类；</li>
+<li>实现类要带一个无参构造；</li>
+</ol>
+<h2 id="3spi的简单demo"><strong>3.SPI的简单Demo</strong></h2>
+<h3 id="spi-的demo结构">SPI 的Demo结构</h3>
+<figure data-type="image" tabindex="1"><img src="/images/Image20210531195835.png" alt="image" loading="lazy"></figure>
+<h3 id="spi-的demo代码">SPI 的Demo代码</h3>
+<pre><code class="language-java">//定义接口
+public interface PayMethod {
+     void getPayMethod();
+}
+//两个实现类
+public class AliPayMethod implements PayMethod {
+    @Override
+    public void getPayMethod() {
+        System.out.println(&quot;ali pay&quot;);
+    }
+}
+public class WechatPayMethod implements PayMethod {
+    @Override
+    public void getPayMethod() {
+        System.out.println(&quot;wechat pay&quot;);
+    }
+}
+//主程序
+public class SPIDemo {
+    public static void main(String[] args) {
+        ServiceLoader&lt;PayMethod&gt; payMethods = ServiceLoader.load(PayMethod.class);
+        Iterator&lt;PayMethod&gt; iterable = payMethods.iterator();
+        while (iterable.hasNext()){
+            System.out.println(iterable.next());
+        }
+    }
+}
+
+//文件
+com.dev.impl.WechatPayMethod
+com.dev.impl.AliPayMethod
+</code></pre>
+<p>上述输出是两个实现类的对象地址。如果你是maven项目的话，请使用jar工程，POM工程是不生效的。</p>
+<h2 id="4spi的实际应用"><strong>4.SPI的实际应用</strong></h2>
+<ul>
+<li>数据驱动加载。JDBC4.0</li>
+</ul>
+<pre><code class="language-java">    private static void loadInitialDrivers() {
+        String drivers;
+        try {
+            drivers = AccessController.doPrivileged(new PrivilegedAction&lt;String&gt;() {
+                public String run() {
+                    return System.getProperty(&quot;jdbc.drivers&quot;);
+                }
+            });
+        } catch (Exception ex) {
+            drivers = null;
+        }
+        AccessController.doPrivileged(new PrivilegedAction&lt;Void&gt;() {
+            public Void run() {
+
+                ServiceLoader&lt;Driver&gt; loadedDrivers = ServiceLoader.load(Driver.class);
+                Iterator&lt;Driver&gt; driversIterator = loadedDrivers.iterator();
+                try{
+                    while(driversIterator.hasNext()) {
+                        driversIterator.next();
+                    }
+                } catch(Throwable t) {
+                // Do nothing
+                }
+                return null;
+            }
+        });
+......
+}
+</code></pre>
+<ul>
+<li>servlet 3.0 提供自定义组件的初始化工作<br>
+<img src="/images/Image20210601192052.png" alt="image" loading="lazy"><br>
+就servlet 3.0自定义组件的初始化而言，Spring官网也是通过要求实现<code>WebApplicationInitializer</code>来减少web.xml的配置。<a href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html">点击此处</a><br>
+Servlet初始化自定义组件过程：</li>
+</ul>
+<ol>
+<li>在启动web容器时，会自动扫描META-INF/services目录下的文件，并将文件中的类实例化；</li>
+<li>Spring通过使用<code>SpringServletContainerInitializer</code>实现<code>ServletContainerInitializer</code>, 从而在容器启动时会执行<code>onStartup</code>方法;</li>
+<li>Spring此时为了扩展性重新定义了一个<code>WebApplicationInitializer</code>的接口，<code>@HandlesTypes</code>会将<code>WebApplicationInitializer</code>的所有实现类作为一个set参数传入；</li>
+<li><code>SpringServletContainerInitializer</code>会执行<code>WebApplicationInitializer</code>所有的实现类中<code>onStartup</code>方法进而实现开发者自定义组件的初始化；<br>
+<img src="/images/9800139-5d659a3462769e84.webp" alt="image" loading="lazy"><br>
+(上述图片来源于网络，侵删）</li>
+</ol>
+
+            </div>
+            <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      微热的吴
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://encyclopedias.github.io/shi-me-shi-spi-ji-zhi/" title="什么是SPI机制">https://encyclopedias.github.io/shi-me-shi-spi-ji-zhi/</a>
+    </li>
+  </ul>
+  <div class="tags">
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
+      
+        <i class="fa fa-chevron-left"></i>
+        <a class="nav-pc-next" title="数据库字段的not null意义何在？" href="https://encyclopedias.github.io/shu-ju-ku-zi-duan-de-not-null-yi-yi-he-zai/">数据库字段的not null意义何在？</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="数据库字段的not null意义何在？" href="https://encyclopedias.github.io/shu-ju-ku-zi-duan-de-not-null-yi-yi-he-zai/">上一篇</a>
+      
+    </div>
+    <div class="nav-next">
+      
+        <a class="nav-pc-next" title="Spring Boot如何实现零配置" href="https://encyclopedias.github.io/spring-boot-qi-dong-yuan-li-fen-xi/">Spring Boot如何实现零配置</a>
+        <a class="nav-mobile-next" title="Spring Boot如何实现零配置" href="https://encyclopedias.github.io/spring-boot-qi-dong-yuan-li-fen-xi/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
+      
+    </div>
+  </div>
+</div>
+            
+  <script src="https://cdn.jsdelivr.net/npm/valine@1.4.4/dist/Valine.min.js"></script>
+<div id="vcomments" style="padding: 10px 0px 0px 0px"></div>
+
+<style>
+  .v .veditor {
+    min-height: 10rem;
+    background-image: url('https://upimage.alexhchu.com/2020/04/21/47eda59424daa.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: rgba(255, 255, 255, 0);
+    resize: none;
+  }
+
+  .v .vwrap {
+    border: 1px solid #000 !important;
+  }
+
+  .v .vbtn {
+    padding: .4rem 1.2rem !important;
+    border-color: #fff !important;
+    background-color: #49b1f5 !important;
+    color: #fff !important;
+    font-size: .7rem !important;
+  }
+
+  .v .vcards .vcard .vh .vmeta .vat {
+    padding: 0 .8rem !important;
+    border: 1px solid #00c4b6 !important;
+    border-radius: 5px !important;
+    color: #00c4b6 !important;
+  }
+</style>
+<script>
+  new Valine({
+    el: '#vcomments',
+    appId: 'E7L4jTeh0jA3mQBlwFJsQI8P-9Nh9j0Va',
+    appKey: 'pNY3E0TMB0tqUJYEgjWimXlO',
+    avatar: 'mp',
+    placeholder: '',
+    pageSize: '',
+    lang: 'zh-cn',
+    visitor: 'true' === 'true',
+    highlight: 'true' === 'true',
+    avatarForce: 'true' === 'false',
+  });
+</script>
+
+          </div>
         </div>
       </div>
     </div>
@@ -727,6 +874,36 @@
   // 代码高亮
   hljs.initHighlightingOnLoad();
 
+</script>
+    <div class="light-box" id="light_box"></div>
+<script>
+  let imgs = document.querySelectorAll('.post-body img');
+  let lightBox = document.querySelector('#light_box');
+  lightBox.addEventListener('mousedown', (e) => {
+    e.preventDefault()
+  })
+  lightBox.addEventListener('mousewheel', (e) => {
+    e.preventDefault()
+  })
+  let width = window.innerWidth * 0.8;
+  lightBox.onclick = () => {
+    let img = lightBox.querySelector('img');
+    lightBox.style = '';
+    img && img.remove();
+  }
+  imgs.forEach(item => {
+    item.onclick = function (e) {
+      let lightImg = document.createElement('img');
+      lightImg.src = this.src;
+      lightBox.style = `height: 100%; opacity: 1; background-color: rgba(0, 0, 0, 0.5);cursor: zoom-out;`;
+      lightImg.style = `width: ${width}px; border: 1px solid #fff; border-radius: 2px;`;
+      lightImg.onclick = function () {
+        lightBox.style = '';
+        this.remove();
+      }
+      lightBox.append(lightImg);
+    }
+  })
 </script>
   </div>
 </body>
@@ -2156,6 +2333,5 @@ doReturn(abc).when(abcService).getCount(anyString()); //
 
 
 <script src=" /media/js/cool.js"></script>
-
 
 </html>
